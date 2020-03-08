@@ -1,0 +1,7 @@
+source activate PythonData
+
+pip install pyautogui
+pip install appscript==1.1.0 
+
+
+Microsoft Visual C++ 14.0 is required. Get it with "Microsoft Visual C++ Build Tools": https://visualstudio.microsoft.com/downloads/
