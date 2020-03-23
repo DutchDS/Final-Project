@@ -1,3 +1,0 @@
-conda create -n final_project python=3.6  
-
-pip install functions
