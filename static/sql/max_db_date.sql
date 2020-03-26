@@ -1,0 +1,1 @@
+select max(update_date) from covid_data
