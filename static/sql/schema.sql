@@ -58,22 +58,102 @@ CREATE TABLE census_data
      )
 );
 -- **********************************************************************
-DROP TABLE IF EXISTS covid_data;
+DROP TABLE IF EXISTS covid_data_0;
 
-CREATE TABLE covid_data
+CREATE TABLE covid_data_0
 (
 	id serial not null,	
-	country text COLLATE pg_catalog."default",
-    state_name text COLLATE pg_catalog."default",
-    county text COLLATE pg_catalog."default",
-    update_date date,
-    confirmed bigint,
-    deaths bigint,
-    recovered bigint,
-    active double precision,
-    "Lat" double precision,
-    "long" double precision,
-	CONSTRAINT "pk_covid_data" PRIMARY KEY (
+    province_state text COLLATE pg_catalog."default",
+    country_region text COLLATE pg_catalog."default",
+    confirmed integer,
+    deaths integer,
+    recovered integer,
+    active bigint,
+    short_date date,
+    latitude double precision,
+    longitude double precision,
+    us_county text COLLATE pg_catalog."default",
+	CONSTRAINT "pk_covid_data_0" PRIMARY KEY (
+        "id"
+     )
+);
+
+DROP TABLE IF EXISTS covid_data_1;
+
+CREATE TABLE covid_data_1
+(
+	id serial not null,	
+    province_state text COLLATE pg_catalog."default",
+    country_region text COLLATE pg_catalog."default",
+    confirmed integer,
+    deaths integer,
+    recovered integer,
+    active bigint,
+    short_date date,
+    latitude double precision,
+    longitude double precision,
+    us_county text COLLATE pg_catalog."default",
+	CONSTRAINT "pk_covid_data_1" PRIMARY KEY (
+        "id"
+     )
+);
+
+DROP TABLE IF EXISTS covid_data_2;
+
+CREATE TABLE covid_data_2
+(
+	id serial not null,	
+    province_state text COLLATE pg_catalog."default",
+    country_region text COLLATE pg_catalog."default",
+    confirmed integer,
+    deaths integer,
+    recovered integer,
+    active bigint,
+    short_date date,
+    latitude double precision,
+    longitude double precision,
+    us_county text COLLATE pg_catalog."default",
+	CONSTRAINT "pk_covid_data_2" PRIMARY KEY (
+        "id"
+     )
+);
+
+DROP TABLE IF EXISTS covid_data_3;
+
+CREATE TABLE covid_data_3
+(
+	id serial not null,	
+    province_state text COLLATE pg_catalog."default",
+    country_region text COLLATE pg_catalog."default",
+    confirmed integer,
+    deaths integer,
+    recovered integer,
+    active bigint,
+    short_date date,
+    latitude double precision,
+    longitude double precision,
+    us_county text COLLATE pg_catalog."default",
+	CONSTRAINT "pk_covid_data_3" PRIMARY KEY (
+        "id"
+     )
+);
+
+DROP TABLE IF EXISTS covid_data_4;
+
+CREATE TABLE covid_data_4
+(
+	id serial not null,	
+    province_state text COLLATE pg_catalog."default",
+    country_region text COLLATE pg_catalog."default",
+    confirmed integer,
+    deaths integer,
+    recovered integer,
+    active bigint,
+    short_date date,
+    latitude double precision,
+    longitude double precision,
+    us_county text COLLATE pg_catalog."default",
+	CONSTRAINT "pk_covid_data_4" PRIMARY KEY (
         "id"
      )
 );
@@ -197,3 +277,54 @@ CREATE TABLE tests_and_hospital_data
 );
 
 -- **********************************************************************
+DROP VIEW IF EXISTS covid_by_county_v;
+create view covid_by_county_v as (
+select country_region, confirmed, deaths, recovered, active, short_date,  s.state_name, s.state, us_county, s.emergency_date
+from covid_data_4 join states_data s on province_state = s.state_name
+order by short_date
+)
+-- ************************************************************************************************
+DROP VIEW IF EXISTS covid_by_state_v;
+create view covid_by_state_v as (
+select country_region, confirmed, deaths, recovered, (confirmed - deaths - recovered) as active, short_date, s.state_name, s.state, s.emergency_date
+from covid_data_0 join states_data s on province_state = s.state_name
+union
+select country_region, sum(confirmed), sum(deaths), sum(recovered), (sum(confirmed) -sum(deaths) - sum(recovered)) as active, short_date, s.state_name, s.state, s.emergency_date 
+from covid_data_1 join states_data s on substring(province_state, position(', ' in province_state)+2, 2) = s.state
+group by substring(province_state, position(', ' in province_state)+2, 2) , country_region, short_date, s.state_name, s.state, s.emergency_date
+union
+select country_region, sum(confirmed), sum(deaths), sum(recovered), (sum(confirmed) -sum(deaths) - sum(recovered)) as active, short_date, s.state_name, s.state, s.emergency_date 
+from covid_data_2 join states_data s on substring(province_state, position(', ' in province_state)+2, 2) = s.state
+group by substring(province_state, position(', ' in province_state)+2, 2) , country_region, short_date, s.state_name, s.state, s.emergency_date
+union
+select country_region, confirmed, deaths, recovered, (confirmed - deaths - recovered) as active, short_date, s.state_name, s.state, s.emergency_date 
+from covid_data_3 join states_data s on province_state = s.state_name
+union
+select country_region, sum(confirmed), sum(deaths), sum(recovered),(sum(confirmed) -sum(deaths) - sum(recovered)) as active, short_date,  s.state_name, s.state, s.emergency_date
+from covid_data_4 join states_data s on province_state = s.state_name
+group by province_state,country_region, short_date,  s.state_name, s.state, s.emergency_date
+order by short_date)
+-- *********************************************************************************************************
+DROP VIEW IF EXISTS covid_by_country_v;
+create view covid_by_country_v as (
+select country_region, sum(confirmed) as confirmed, sum(deaths) as deaths, sum(recovered) as recovered, (sum(confirmed)-sum(deaths)-sum(recovered)) as active, short_date
+from covid_data_0
+group by country_region, short_date
+union
+select country_region, sum(confirmed) as confirmed, sum(deaths) as deaths,  sum(recovered) as recovered, (sum(confirmed)-sum(deaths)-sum(recovered)) as active, short_date 
+from covid_data_1
+group by country_region, short_date
+union
+select country_region, sum(confirmed) as confirmed, sum(deaths) as deaths, sum(recovered) as recovered, (sum(confirmed)-sum(deaths)-sum(recovered)) as active, short_date 
+from covid_data_2 
+group by country_region, short_date
+union
+select country_region, sum(confirmed) as confirmed, sum(deaths) as deaths, sum(recovered) as recovered, (sum(confirmed)-sum(deaths)-sum(recovered)) as active, short_date 
+from covid_data_3
+group by country_region, short_date
+union
+select country_region, sum(confirmed) as confirmed, sum(deaths) as deaths, sum(recovered) as recovered, (sum(confirmed)-sum(deaths)-sum(recovered)) as active,short_date
+from covid_data_4
+group by country_region, short_date
+order by short_date
+)
