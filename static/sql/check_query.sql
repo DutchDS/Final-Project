@@ -1,6 +1,15 @@
+select * from covid_by_county_v
+where country_region = 'US' and us_county like 'St. Louis%' and state = 'MO'
+order by us_county, short_date
 
--- select * from covid_data
--- where country = 'US' and county = 'St. Louis' and state_name = 'Missouri'
+select * from covid_by_state_v
+where country_region = 'US'  and state = 'MO'
+order by short_date
+
+select date, state, positive, negative, pending, death, total,  hospitalized, "totalTestResults" as tests 
+from tests_and_hospital_data
+where state = 'WA'
+order by date
 
 -- drop table if exists covid_data
 -- truncate table covid_data
