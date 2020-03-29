@@ -4,7 +4,7 @@ CREATE VIEW case_study_1_v as (
 SELECT
 	id,
 	CASE WHEN lower(summary) like '%hospitalized%' THEN 1 ELSE 0 END as hospitalized,
-	death,
+	CASE WHEN (death='1') or (death is not null) THEN 1 ELSE 0 END as death,
     CASE WHEN age BETWEEN 0 AND 39 THEN 2 ELSE 0 END as age_0_39,
     CASE WHEN age BETWEEN 40 AND 49 THEN 4 ELSE 0 END as age_40_49,
     CASE WHEN age BETWEEN 50 AND 59 THEN 13 ELSE 0 END as age_50_59,
