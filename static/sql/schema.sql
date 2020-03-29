@@ -11,6 +11,8 @@ CREATE TABLE age_data
      )  
 );
 -- **********************************************************************
+DROP VIEW IF EXISTS census_data_by_county_v CASCADE;
+DROP VIEW IF EXISTS census_data_by_state_v CASCADE;
 DROP TABLE IF EXISTS  census_data;
 
 CREATE TABLE census_data
@@ -58,6 +60,10 @@ CREATE TABLE census_data
      )
 );
 -- ******************************************************************************
+DROP VIEW IF EXISTS covid_by_county_v CASCADE;
+DROP VIEW IF EXISTS covid_by_state_v CASCADE;
+DROP VIEW IF EXISTS covid_by_country_v CASCADE;
+
 DROP TABLE IF EXISTS covid_data_states;
 
 CREATE TABLE covid_data_states
@@ -196,56 +202,37 @@ CREATE TABLE gender_data
      )
 );
 -- **********************************************************************
-DROP TABLE IF EXISTS individual_case_data;
+DROP TABLE IF EXISTS individual_case_data CASCADE;
 
 CREATE TABLE individual_case_data
 (
-	id serial not null,	
-    "ID" double precision,
-    age text COLLATE pg_catalog."default",
-    sex text COLLATE pg_catalog."default",
-    city text COLLATE pg_catalog."default",
-    province text COLLATE pg_catalog."default",
-    country text COLLATE pg_catalog."default",
-    wuhan_1_or_0 double precision,
-    latitude double precision,
-    longitude double precision,
-    geo_resolution text COLLATE pg_catalog."default",
-    date_onset_symptoms text COLLATE pg_catalog."default",
-    date_admission_hospital text COLLATE pg_catalog."default",
-    date_confirmation text COLLATE pg_catalog."default",
-    symptoms text COLLATE pg_catalog."default",
-    "lives_in_Wuhan" text COLLATE pg_catalog."default",
-    travel_history_dates text COLLATE pg_catalog."default",
-    travel_history_location text COLLATE pg_catalog."default",
-    reported_market_exposure text COLLATE pg_catalog."default",
-    additional_information text COLLATE pg_catalog."default",
-    chronic_disease_binary double precision,
-    chronic_disease text COLLATE pg_catalog."default",
-    source text COLLATE pg_catalog."default",
-    sequence_available text COLLATE pg_catalog."default",
-    outcome text COLLATE pg_catalog."default",
-    date_death_or_discharge text COLLATE pg_catalog."default",
-    notes_for_discussion text COLLATE pg_catalog."default",
+	id bigint,
+    case_in_country double precision,
+    reporting_date text COLLATE pg_catalog."default",
+    unnamed_3 double precision,
+    summary text COLLATE pg_catalog."default",
     location text COLLATE pg_catalog."default",
-    admin3 text COLLATE pg_catalog."default",
-    admin2 text COLLATE pg_catalog."default",
-    admin1 text COLLATE pg_catalog."default",
-    country_new text COLLATE pg_catalog."default",
-    admin_id text COLLATE pg_catalog."default",
-    data_moderator_initials text COLLATE pg_catalog."default",
-    "Unnamed: 33" double precision,
-    "Unnamed: 34" double precision,
-    "Unnamed: 35" double precision,
-    "Unnamed: 36" double precision,
-    "Unnamed: 37" double precision,
-    "Unnamed: 38" double precision,
-    "Unnamed: 39" double precision,
-    "Unnamed: 40" double precision,
-    "Unnamed: 41" double precision,
-    "Unnamed: 42" double precision,
-    "Unnamed: 43" double precision,
-    "Unnamed: 44" double precision,
+    country text COLLATE pg_catalog."default",
+    gender text COLLATE pg_catalog."default",
+    age double precision,
+    symptom_onset text COLLATE pg_catalog."default",
+    if_onset_approximated double precision,
+    hosp_visit_date text COLLATE pg_catalog."default",
+    exposure_start text COLLATE pg_catalog."default",
+    exposure_end text COLLATE pg_catalog."default",
+    visit_wuhan bigint,
+    from_wuhan double precision,
+    death text COLLATE pg_catalog."default",
+    recovered text COLLATE pg_catalog."default",
+    symptom text COLLATE pg_catalog."default",
+    source text COLLATE pg_catalog."default",
+    link text COLLATE pg_catalog."default",
+    unnamed_21 double precision,
+    unnamed_22 double precision,
+    unnamed_23 double precision,
+    unnamed_24 double precision,
+    unnamed_25 double precision,
+    unnamed_26 double precision,
 	CONSTRAINT "pk_individual_case_data" PRIMARY KEY (
         "id"
      )
@@ -435,7 +422,7 @@ SELECT
 	CASE WHEN lower(symptom) like '%diarrhea%' THEN 1 ELSE 0 END as diarrhea,
 	CASE WHEN lower(symptom) like '%headache%' THEN 1 ELSE 0 END as headache,
 	CASE WHEN country = 'China' THEN 1 ELSE 0 END as from_china,
-	"visiting Wuhan" as visit_wuhan,
-	"from Wuhan" as from_wuhan
+	visit_wuhan,
+	from_wuhan
 FROM individual_case_data	
 	);
