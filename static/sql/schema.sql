@@ -57,6 +57,32 @@ CREATE TABLE census_data
         "id"
      )
 );
+-- ******************************************************************************
+DROP TABLE IF EXISTS covid_data_states;
+
+CREATE TABLE covid_data_states
+(
+	id serial not null,	
+    date date,
+    state text COLLATE pg_catalog."default",
+    positive bigint,
+    negative bigint,
+    pending bigint,
+    hospitalized bigint,
+    death bigint,
+    dontuse_total bigint,
+    check_date date,
+    total_tests bigint,
+    fips bigint,
+    death_inc bigint,
+    hospital_inc bigint,
+    neg_inc bigint,
+    pos_inc bigint,
+    tot_tests_inc bigint,
+	CONSTRAINT "pk_covid_data_states" PRIMARY KEY (
+        "id"
+     )
+);
 -- **********************************************************************
 DROP TABLE IF EXISTS covid_data_0;
 
@@ -331,3 +357,85 @@ from covid_data_4
 group by country_region, short_date
 order by short_date
 );
+-- *******************************************************************
+DROP VIEW IF EXISTS census_data_by_state_v;
+CREATE VIEW census_data_by_state_v as (
+select 
+"State" as state, sum("TotalPop") as total_pop, 
+"Men" as men, "Women" as women,
+"White" as white, "Black" as black, "Native" as native, "Hispanic" as hispanic, "Pacific" as pacific
+from census_data
+group by "State", men, women, white, black, native, hispanic, pacific
+	);
+-- ******************************************************************************
+DROP VIEW IF EXISTS census_data_by_county_v CASCADE;
+
+create view census_data_by_county_v as (
+select 
+"State" as state, "County" as county, 
+sum("TotalPop") as total_pop, sum("Men") as men, sum("Women") as women, 
+sum(round("Hispanic"*"TotalPop"/100)) as hispanic, 
+sum(round("White"*"TotalPop"/100)) as white, 
+sum(round("Black"*"TotalPop"/100)) as black, 
+sum(round("Pacific"*"TotalPop"/100)) as pacific, 
+sum(round("Native"*"TotalPop"/100)) as native  
+from census_data 
+-- where "State" = 'Missouri' and "County" = 'St. Louis County'
+group by "State", "County"
+	);
+-- *****************************************************************************************	
+
+DROP VIEW IF EXISTS covid_and_census_by_state_v;
+
+create view covid_and_census_by_state_v as (
+select 
+	date, s.state_name, s.state, s.emergency_date, s.first_case_date, 
+	positive, negative, pending, hospitalized, death, (positive + hospitalized + death) as total_cases, total_tests, death_inc, hospital_inc, neg_inc, pos_inc, tot_tests_inc, 
+	s.latitude, s.longitude,
+	cd.total_pop, cd.men, cd.women, cd.white, cd.black, cd.hispanic, cd.native, cd.pacific
+from covid_data_states c 
+	join states_data s on c.state = s.state
+	left join census_data_by_state_v cd on s.state_name = cd.state 
+);
+-- *********************************************************************************************
+DROP VIEW IF EXISTS covid_and_census_by_county_v;
+
+create view covid_and_census_by_county_v as (
+select 
+	c.short_date, c.state_name, c.state, c.us_county,
+-- 	s.emergency_date, s.first_case_date, 
+	c.confirmed, c.recovered, c.deaths, c.active,  
+-- 	s.latitude, s.longitude,
+	cd.total_pop, cd.men, cd.women, cd.white, cd.black, cd.hispanic, cd.native, cd.pacific
+from covid_by_county_v c 
+	left join census_data_by_county_v cd on (c.us_county || ' County')= cd.county 
+-- where c.state = 'MO' and c.us_county = 'St. Louis'
+);
+-- ***************************************************************************************
+DROP VIEW IF EXISTS case_study_1_v;
+
+CREATE VIEW case_study_1_v as (
+SELECT
+	id,
+	CASE WHEN lower(summary) like '%hospitalized%' THEN 1 ELSE 0 END as hospitalized,
+	CASE WHEN (death='1') or (death is not null) THEN 1 ELSE 0 END as death,
+    CASE WHEN age BETWEEN 0 AND 39 THEN 2 ELSE 0 END as age_0_39,
+    CASE WHEN age BETWEEN 40 AND 49 THEN 4 ELSE 0 END as age_40_49,
+    CASE WHEN age BETWEEN 50 AND 59 THEN 13 ELSE 0 END as age_50_59,
+    CASE WHEN age BETWEEN 60 AND 69 THEN 36 ELSE 0 END as age_60_69,
+	CASE WHEN age BETWEEN 70 AND 79 THEN 80 ELSE 0 END as age_70_79,
+    CASE WHEN age >= 80 THEN 148 ELSE 0 END as age_80_up,
+	CASE WHEN (gender = 'male' or gender = 'Male') THEN 46 ELSE 0 END as gender_male,
+	CASE WHEN (gender = 'female' or gender = 'Female') THEN 28 ELSE 0 END as gender_female,
+	CASE WHEN lower(summary) like '%pneumonia%' THEN 1 ELSE 0 END as pneumonia,
+	CASE WHEN lower(summary) like '%fever%' THEN 1 ELSE 0 END as fever,
+	CASE WHEN lower(summary) like '%cough%' THEN 1 ELSE 0 END as cough,
+	CASE WHEN lower(summary) like '%breath%' THEN 1 ELSE 0 END as breath,
+	CASE WHEN lower(symptom) like '%fatigue%' THEN 1 ELSE 0 END as fatigue,
+	CASE WHEN lower(symptom) like '%diarrhea%' THEN 1 ELSE 0 END as diarrhea,
+	CASE WHEN lower(symptom) like '%headache%' THEN 1 ELSE 0 END as headache,
+	CASE WHEN country = 'China' THEN 1 ELSE 0 END as from_china,
+	"visiting Wuhan" as visit_wuhan,
+	"from Wuhan" as from_wuhan
+FROM individual_case_data	
+	);

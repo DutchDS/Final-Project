@@ -33,3 +33,8 @@ WHERE country_region = 'South Korea';
 UPDATE covid_data_3
 SET country_region = 'Korea, South'
 WHERE country_region = 'Republic of Korea';
+
+UPDATE individual_case_data
+SET summary = substring(summary, 0, position('not hospitalized' in lower(summary))) || 'not-in-hospital' || 
+substring(summary, position('not hospitalized' in lower(summary))+16)
+WHERE lower(summary) like '%not hospitalized%'
