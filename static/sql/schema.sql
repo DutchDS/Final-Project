@@ -202,39 +202,48 @@ CREATE TABLE gender_data
      )
 );
 -- **********************************************************************
-DROP TABLE IF EXISTS individual_case_data CASCADE;
+DROP TABLE IF EXISTS individual_case_data_closed CASCADE;
 
-CREATE TABLE individual_case_data
-(
+CREATE TABLE individual_case_data_closed
+(	id_pk serial not null,
 	id bigint,
-    case_in_country double precision,
+    open_closed text COLLATE pg_catalog."default",
     reporting_date text COLLATE pg_catalog."default",
-    unnamed_3 double precision,
-    summary text COLLATE pg_catalog."default",
+    age text COLLATE pg_catalog."default",
+    gender text COLLATE pg_catalog."default",
     location text COLLATE pg_catalog."default",
     country text COLLATE pg_catalog."default",
-    gender text COLLATE pg_catalog."default",
-    age double precision,
-    symptom_onset text COLLATE pg_catalog."default",
-    if_onset_approximated double precision,
-    hosp_visit_date text COLLATE pg_catalog."default",
-    exposure_start text COLLATE pg_catalog."default",
-    exposure_end text COLLATE pg_catalog."default",
-    visit_wuhan bigint,
-    from_wuhan double precision,
+    from_hotspot text COLLATE pg_catalog."default",
+--  double precision,
+    visit_hotspot text COLLATE pg_catalog."default",
+--  bigint,
+    summary text COLLATE pg_catalog."default",
     death text COLLATE pg_catalog."default",
-    recovered text COLLATE pg_catalog."default",
     symptom text COLLATE pg_catalog."default",
-    source text COLLATE pg_catalog."default",
-    link text COLLATE pg_catalog."default",
-    unnamed_21 double precision,
-    unnamed_22 double precision,
-    unnamed_23 double precision,
-    unnamed_24 double precision,
-    unnamed_25 double precision,
-    unnamed_26 double precision,
-	CONSTRAINT "pk_individual_case_data" PRIMARY KEY (
-        "id"
+	CONSTRAINT "pk_individual_case_data_closed" PRIMARY KEY (
+        "id_pk"
+     )
+);
+DROP TABLE IF EXISTS individual_case_data_open CASCADE;
+
+CREATE TABLE individual_case_data_open
+(	id_pk serial not null,
+	id bigint,
+    open_closed text COLLATE pg_catalog."default",
+    reporting_date text COLLATE pg_catalog."default",
+    age text COLLATE pg_catalog."default",
+    gender text COLLATE pg_catalog."default",
+    location text COLLATE pg_catalog."default",
+    country text COLLATE pg_catalog."default",
+    from_hotspot text COLLATE pg_catalog."default",
+--  double precision,
+    visit_hotspot text COLLATE pg_catalog."default",
+--  bigint,
+    outcome text COLLATE pg_catalog."default",
+    symptoms text COLLATE pg_catalog."default",
+    date_admission_hospital text COLLATE pg_catalog."default",
+	CONSTRAINT "pk_individual_case_data_open" PRIMARY KEY (
+        "id_pk"
      )
 );
 -- **********************************************************************
@@ -399,21 +408,24 @@ from covid_by_county_v c
 -- where c.state = 'MO' and c.us_county = 'St. Louis'
 );
 -- ***************************************************************************************
-DROP VIEW IF EXISTS case_study_1_v;
+DROP VIEW IF EXISTS case_study_1_v CASCADE;
 
 CREATE VIEW case_study_1_v as (
 SELECT
 	id,
-	CASE WHEN lower(summary) like '%hospitalized%' THEN 1 ELSE 0 END as hospitalized,
-	CASE WHEN (death='1') or (death is not null) THEN 1 ELSE 0 END as death,
-    CASE WHEN age BETWEEN 0 AND 39 THEN 2 ELSE 0 END as age_0_39,
-    CASE WHEN age BETWEEN 40 AND 49 THEN 4 ELSE 0 END as age_40_49,
-    CASE WHEN age BETWEEN 50 AND 59 THEN 13 ELSE 0 END as age_50_59,
-    CASE WHEN age BETWEEN 60 AND 69 THEN 36 ELSE 0 END as age_60_69,
-	CASE WHEN age BETWEEN 70 AND 79 THEN 80 ELSE 0 END as age_70_79,
-    CASE WHEN age >= 80 THEN 148 ELSE 0 END as age_80_up,
-	CASE WHEN (gender = 'male' or gender = 'Male') THEN 46 ELSE 0 END as gender_male,
-	CASE WHEN (gender = 'female' or gender = 'Female') THEN 28 ELSE 0 END as gender_female,
+	age,
+	gender,
+	CASE WHEN (((death='0') or (death is null)) and (lower(summary) not like '%hospitalized%')) THEN 1 ELSE 0 END as stayed_home,
+	CASE WHEN ((lower(summary) like '%hospitalized%') and ((death='0') or (death is null))) THEN 1 ELSE 0 END as hospitalized,
+	CASE WHEN (death<>'0') THEN 1 ELSE 0 END as death,
+    CASE WHEN age BETWEEN '00' AND '39' THEN 1 ELSE 0 END as age_0_39,
+    CASE WHEN age BETWEEN '40' AND '49' THEN 1 ELSE 0 END as age_40_49,
+    CASE WHEN age BETWEEN '50' AND '59' THEN 1 ELSE 0 END as age_50_59,
+    CASE WHEN age BETWEEN '60' AND '69' THEN 1 ELSE 0 END as age_60_69,
+	CASE WHEN age BETWEEN '70' AND '79' THEN 1 ELSE 0 END as age_70_79,
+    CASE WHEN age >= '80' THEN 1 ELSE 0 END as age_80_up,
+	CASE WHEN (gender = 'male' or gender = 'Male') THEN 1 ELSE 0 END as gender_male,
+	CASE WHEN (gender = 'female' or gender = 'Female') THEN 1 ELSE 0 END as gender_female,
 	CASE WHEN lower(summary) like '%pneumonia%' THEN 1 ELSE 0 END as pneumonia,
 	CASE WHEN lower(summary) like '%fever%' THEN 1 ELSE 0 END as fever,
 	CASE WHEN lower(summary) like '%cough%' THEN 1 ELSE 0 END as cough,
@@ -422,7 +434,45 @@ SELECT
 	CASE WHEN lower(symptom) like '%diarrhea%' THEN 1 ELSE 0 END as diarrhea,
 	CASE WHEN lower(symptom) like '%headache%' THEN 1 ELSE 0 END as headache,
 	CASE WHEN country = 'China' THEN 1 ELSE 0 END as from_china,
-	visit_wuhan,
-	from_wuhan
-FROM individual_case_data	
+	CASE WHEN lower(visit_hotspot) = '1' THEN 1 ELSE 0 END as visit_hotspot,
+	CASE WHEN lower(from_hotspot) = '1.0' THEN 1 ELSE 0 END as from_hotspot
+FROM individual_case_data_closed	
 	);
+	
+DROP VIEW IF EXISTS case_study_2_v CASCADE;
+
+CREATE VIEW case_study_2_v as (
+SELECT
+	id,
+	age,
+	gender,
+	CASE WHEN date_admission_hospital is null and  lower(outcome) not in ('died','death')  THEN 1 ELSE 0 END as stayed_home,
+	CASE WHEN date_admission_hospital is not null and  lower(outcome) not in ('died','death')  THEN 1 ELSE 0 END as hospitalized,
+	CASE WHEN lower(outcome) in ('died','death') THEN 1 ELSE 0 END as death,
+    CASE WHEN age BETWEEN '00' AND '39' THEN 1 ELSE 0 END as age_0_39,
+    CASE WHEN age BETWEEN '40' AND '49' THEN 1 ELSE 0 END as age_40_49,
+    CASE WHEN age BETWEEN '50' AND '59' THEN 1 ELSE 0 END as age_50_59,
+    CASE WHEN age BETWEEN '60' AND '69' THEN 1 ELSE 0 END as age_60_69,
+	CASE WHEN age BETWEEN '70' AND '79' THEN 1 ELSE 0 END as age_70_79,
+    CASE WHEN age >= '80' THEN 1 ELSE 0 END as age_80_up,
+	CASE WHEN (gender = 'male' or gender = 'Male') THEN 1 ELSE 0 END as gender_male,
+	CASE WHEN (gender = 'female' or gender = 'Female') THEN 1 ELSE 0 END as gender_female,
+	CASE WHEN lower(symptoms) like '%pneumonia%' THEN 1 ELSE 0 END as pneumonia,
+	CASE WHEN lower(symptoms) like '%fever%' THEN 1 ELSE 0 END as fever,
+	CASE WHEN lower(symptoms) like '%cough%' THEN 1 ELSE 0 END as cough,
+	CASE WHEN lower(symptoms) like '%breath%' THEN 1 ELSE 0 END as breath,
+	CASE WHEN lower(symptoms) like '%fatigue%' THEN 1 ELSE 0 END as fatigue,
+	CASE WHEN lower(symptoms) like '%diarrhea%' THEN 1 ELSE 0 END as diarrhea,
+	CASE WHEN lower(symptoms) like '%headache%' THEN 1 ELSE 0 END as headache,
+	CASE WHEN country = 'China' THEN 1 ELSE 0 END as from_china,
+	CASE WHEN lower(visit_hotspot) = '1.0' THEN 1 ELSE 0 END as visit_hotspot,
+	CASE WHEN lower(from_hotspot) = 'yes' THEN 1 ELSE 0 END as from_hotspot
+FROM individual_case_data_open	
+	);
+
+DROP VIEW IF EXISTS case_study_2_all;
+CREATE VIEW case_study_all_v as (
+SELECT 'closed' as status, * FROM case_study_1_v 
+UNION
+SELECT 'open', * FROM case_study_2_v 
+);
