@@ -446,7 +446,7 @@ SELECT
 	id,
 	age,
 	gender,
-	CASE WHEN date_admission_hospital is null and  lower(outcome) not in ('died','death')  THEN 1 ELSE 0 END as stayed_home,
+	CASE WHEN date_admission_hospital is null or lower(outcome) not in ('died','death')  THEN 1 ELSE 0 END as stayed_home,
 	CASE WHEN date_admission_hospital is not null and  lower(outcome) not in ('died','death')  THEN 1 ELSE 0 END as hospitalized,
 	CASE WHEN lower(outcome) in ('died','death') THEN 1 ELSE 0 END as death,
     CASE WHEN age BETWEEN '00' AND '39' THEN 1 ELSE 0 END as age_0_39,
