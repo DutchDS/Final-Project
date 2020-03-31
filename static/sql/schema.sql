@@ -18,43 +18,43 @@ DROP TABLE IF EXISTS  census_data;
 CREATE TABLE census_data
 (
 	id serial not null,	
-    "TractId" bigint,
-    "State" text COLLATE pg_catalog."default",
-    "County" text COLLATE pg_catalog."default",
-    "TotalPop" bigint,
-    "Men" bigint,
-    "Women" bigint,
-    "Hispanic" double precision,
-    "White" double precision,
-    "Black" double precision,
-    "Native" double precision,
-    "Asian" double precision,
-    "Pacific" double precision,
-    "VotingAgeCitizen" bigint,
-    "Income" double precision,
-    "IncomeErr" double precision,
-    "IncomePerCap" double precision,
-    "IncomePerCapErr" double precision,
-    "Poverty" double precision,
-    "ChildPoverty" double precision,
-    "Professional" double precision,
-    "Service" double precision,
-    "Office" double precision,
-    "Construction" double precision,
-    "Production" double precision,
-    "Drive" double precision,
-    "Carpool" double precision,
-    "Transit" double precision,
-    "Walk" double precision,
-    "OtherTransp" double precision,
-    "WorkAtHome" double precision,
-    "MeanCommute" double precision,
-    "Employed" bigint,
-    "PrivateWork" double precision,
-    "PublicWork" double precision,
-    "SelfEmployed" double precision,
-    "FamilyWork" double precision,
-    "Unemployment" double precision,
+    tract_id bigint,
+    state text COLLATE pg_catalog."default",
+    county text COLLATE pg_catalog."default",
+    total_pop bigint,
+    men bigint,
+    women bigint,
+    hispanic double precision,
+    white double precision,
+    black double precision,
+    native double precision,
+    asian double precision,
+    pacific double precision,
+    voting_age_citizen bigint,
+    income double precision,
+    income_err double precision,
+    income_per_cap double precision,
+    income_per_cap_err double precision,
+    poverty double precision,
+    child_poverty double precision,
+    professional double precision,
+    service double precision,
+    office double precision,
+    construction double precision,
+    production double precision,
+    drive double precision,
+    carpool double precision,
+    transit double precision,
+    walk double precision,
+    other_transp double precision,
+    work_at_home double precision,
+    mean_commute double precision,
+    employed bigint,
+    private_work double precision,
+    public_work double precision,
+    self_employed double precision,
+    family_work double precision,
+    unemployment double precision,
 	CONSTRAINT "pk_census_data" PRIMARY KEY (
         "id"
      )
@@ -242,6 +242,7 @@ CREATE TABLE individual_case_data_open
     outcome text COLLATE pg_catalog."default",
     symptoms text COLLATE pg_catalog."default",
     date_admission_hospital text COLLATE pg_catalog."default",
+ 	chronic_disease text COLLATE pg_catalog."default",
 	CONSTRAINT "pk_individual_case_data_open" PRIMARY KEY (
         "id_pk"
      )
@@ -302,10 +303,10 @@ CREATE TABLE tests_and_hospital_data
 );
 
 -- **********************************************************************
-DROP VIEW IF EXISTS covid_by_county_v;
+DROP VIEW IF EXISTS covid_by_county_v CASCADE;
 create view covid_by_county_v as (
-select country_region, confirmed, deaths, recovered, active, short_date,  s.state_name, s.state, us_county, s.emergency_date, s.first_case_date
-from covid_data_4 join states_data s on province_state = s.state_name
+select c.country_region, c.confirmed, c.deaths, c.recovered, c.active, c.short_date,  s.state_name, s.state, us_county, s.emergency_date, s.first_case_date, c.latitude, c.longitude
+from covid_data_4 c join states_data s on province_state = s.state_name
 order by short_date
 );
 -- ************************************************************************************************
@@ -357,28 +358,36 @@ order by short_date
 DROP VIEW IF EXISTS census_data_by_state_v;
 CREATE VIEW census_data_by_state_v as (
 select 
-"State" as state, sum("TotalPop") as total_pop, 
-"Men" as men, "Women" as women,
-"White" as white, "Black" as black, "Native" as native, "Hispanic" as hispanic, "Pacific" as pacific
+	state,
+	sum(total_pop) as total_pop, 
+	sum(men) as men,  
+	sum(women) as women,
+	sum(round(white*total_pop/100)) as white, 
+	sum(round(black*total_pop/100)) as black, 
+	sum(round(native*total_pop/100)) as native, 
+	sum(round(hispanic*total_pop/100)) as hispanic, 
+	sum(round(pacific*total_pop/100)) as pacific
 from census_data
-group by "State", men, women, white, black, native, hispanic, pacific
+group by state
 	);
 -- ******************************************************************************
 DROP VIEW IF EXISTS census_data_by_county_v CASCADE;
 
 create view census_data_by_county_v as (
 select 
-"State" as state, "County" as county, 
-sum("TotalPop") as total_pop, sum("Men") as men, sum("Women") as women, 
-sum(round("Hispanic"*"TotalPop"/100)) as hispanic, 
-sum(round("White"*"TotalPop"/100)) as white, 
-sum(round("Black"*"TotalPop"/100)) as black, 
-sum(round("Pacific"*"TotalPop"/100)) as pacific, 
-sum(round("Native"*"TotalPop"/100)) as native  
-from census_data 
--- where "State" = 'Missouri' and "County" = 'St. Louis County'
-group by "State", "County"
-	);
+state,
+county,
+sum(total_pop) as total_pop, 
+sum(men) as men,  
+sum(women) as women,
+sum(round(white*total_pop/100)) as white, 
+sum(round(black*total_pop/100)) as black, 
+sum(round(native*total_pop/100)) as native, 
+sum(round(hispanic*total_pop/100)) as hispanic, 
+sum(round(pacific*total_pop/100)) as pacific
+from census_data
+group by state, county
+);
 -- *****************************************************************************************	
 
 DROP VIEW IF EXISTS covid_and_census_by_state_v;
@@ -399,13 +408,11 @@ DROP VIEW IF EXISTS covid_and_census_by_county_v;
 create view covid_and_census_by_county_v as (
 select 
 	c.short_date, c.state_name, c.state, c.us_county,
--- 	s.emergency_date, s.first_case_date, 
-	c.confirmed, c.recovered, c.deaths, c.active,  
--- 	s.latitude, s.longitude,
-	cd.total_pop, cd.men, cd.women, cd.white, cd.black, cd.hispanic, cd.native, cd.pacific
+	c.confirmed, c.recovered, c.deaths, c.active, 
+	cd.total_pop, cd.men, cd.women, cd.white, cd.black, cd.hispanic, cd.native, cd.pacific,
+	c.latitude, c.longitude
 from covid_by_county_v c 
-	left join census_data_by_county_v cd on (c.us_county || ' County')= cd.county 
--- where c.state = 'MO' and c.us_county = 'St. Louis'
+	left join census_data_by_county_v cd on c.us_county = cd.county and c.state_name = cd.state
 );
 -- ***************************************************************************************
 DROP VIEW IF EXISTS case_study_1_v CASCADE;
@@ -415,9 +422,9 @@ SELECT
 	id,
 	age,
 	gender,
-	CASE WHEN (((death='0') or (death is null)) and (lower(summary) not like '%hospitalized%')) THEN 1 ELSE 0 END as stayed_home,
-	CASE WHEN ((lower(summary) like '%hospitalized%') and ((death='0') or (death is null))) THEN 1 ELSE 0 END as hospitalized,
-	CASE WHEN (death<>'0') THEN 1 ELSE 0 END as death,
+	CASE WHEN (death<>'0') THEN 1 
+	ELSE (CASE WHEN (lower(summary) like '%hospitalized%') THEN 2  
+			ELSE 3 END) END as final_outcome,
     CASE WHEN age BETWEEN '00' AND '39' THEN 1 ELSE 0 END as age_0_39,
     CASE WHEN age BETWEEN '40' AND '49' THEN 1 ELSE 0 END as age_40_49,
     CASE WHEN age BETWEEN '50' AND '59' THEN 1 ELSE 0 END as age_50_59,
@@ -426,18 +433,23 @@ SELECT
     CASE WHEN age >= '80' THEN 1 ELSE 0 END as age_80_up,
 	CASE WHEN (gender = 'male' or gender = 'Male') THEN 1 ELSE 0 END as gender_male,
 	CASE WHEN (gender = 'female' or gender = 'Female') THEN 1 ELSE 0 END as gender_female,
-	CASE WHEN lower(summary) like '%pneumonia%' THEN 1 ELSE 0 END as pneumonia,
-	CASE WHEN lower(summary) like '%fever%' THEN 1 ELSE 0 END as fever,
-	CASE WHEN lower(summary) like '%cough%' THEN 1 ELSE 0 END as cough,
-	CASE WHEN lower(summary) like '%breath%' THEN 1 ELSE 0 END as breath,
-	CASE WHEN lower(symptom) like '%fatigue%' THEN 1 ELSE 0 END as fatigue,
-	CASE WHEN lower(symptom) like '%diarrhea%' THEN 1 ELSE 0 END as diarrhea,
-	CASE WHEN lower(symptom) like '%headache%' THEN 1 ELSE 0 END as headache,
-	CASE WHEN country = 'China' THEN 1 ELSE 0 END as from_china,
+	CASE WHEN (lower(summary) like '%pneumonia%' or lower(symptom) like '%pneumonia%') THEN 1 ELSE 0 END as pneumonia,
+	CASE WHEN (lower(summary) like '%fever%' or lower(symptom) like '%fever%') THEN 1 ELSE 0 END as fever,
+	CASE WHEN (lower(summary) like '%cough%' or lower(symptom) like '%cough%') THEN 1 ELSE 0 END as cough,
+	CASE WHEN (lower(summary) like '%sputum%' or lower(symptom) like '%sputum%') THEN 1 ELSE 0 END as sputum,
+	CASE WHEN (lower(summary) like '%chill%' or lower(symptom) like '%chill%') THEN 1 ELSE 0 END as chills,
+	CASE WHEN (lower(summary) like '%malaise%' or lower(symptom) like '%malaise%') THEN 1 ELSE 0 END as malaise,
+	CASE WHEN (lower(summary) like '%breath%' or lower(symptom) like '%breath%') THEN 1 ELSE 0 END as breath,
+	CASE WHEN (lower(summary) like '%fatigue%' or lower(symptom) like '%fatigue%') THEN 1 ELSE 0 END as fatigue,
+	CASE WHEN (lower(summary) like '%diarrhea%' or lower(symptom) like '%diarrhea%') THEN 1 ELSE 0 END as diarrhea,
+	CASE WHEN (lower(summary) like '%headache%' or lower(symptom) like '%headache%') THEN 1 ELSE 0 END as headache,
+	CASE WHEN (lower(summary) like '%throat%' or lower(symptom) like '%throat%') THEN 1 ELSE 0 END as throat_ache,
+	CASE WHEN (lower(summary) like '%sorenes%' or lower(symptom) like '%joint%' or lower(symptom) like '%muscle%' or lower(symptom) like '%sorenes%') THEN 1 ELSE 0 END as soreness,
+	CASE WHEN (lower(summary) like '%pre%condition%' or lower(symptom) like '%pre%condition%') THEN 1 ELSE 0 END as precondition,
 	CASE WHEN lower(visit_hotspot) = '1' THEN 1 ELSE 0 END as visit_hotspot,
 	CASE WHEN lower(from_hotspot) = '1.0' THEN 1 ELSE 0 END as from_hotspot
 FROM individual_case_data_closed	
-	);
+);
 	
 DROP VIEW IF EXISTS case_study_2_v CASCADE;
 
@@ -446,9 +458,9 @@ SELECT
 	id,
 	age,
 	gender,
-	CASE WHEN date_admission_hospital is null or lower(outcome) not in ('died','death')  THEN 1 ELSE 0 END as stayed_home,
-	CASE WHEN date_admission_hospital is not null and  lower(outcome) not in ('died','death')  THEN 1 ELSE 0 END as hospitalized,
-	CASE WHEN lower(outcome) in ('died','death') THEN 1 ELSE 0 END as death,
+	CASE WHEN lower(outcome) in ('died','death') THEN 1 
+	ELSE (CASE WHEN date_admission_hospital is not null THEN 2  
+			ELSE 3 END) END as final_outcome,
     CASE WHEN age BETWEEN '00' AND '39' THEN 1 ELSE 0 END as age_0_39,
     CASE WHEN age BETWEEN '40' AND '49' THEN 1 ELSE 0 END as age_40_49,
     CASE WHEN age BETWEEN '50' AND '59' THEN 1 ELSE 0 END as age_50_59,
@@ -460,11 +472,16 @@ SELECT
 	CASE WHEN lower(symptoms) like '%pneumonia%' THEN 1 ELSE 0 END as pneumonia,
 	CASE WHEN lower(symptoms) like '%fever%' THEN 1 ELSE 0 END as fever,
 	CASE WHEN lower(symptoms) like '%cough%' THEN 1 ELSE 0 END as cough,
+	CASE WHEN lower(symptoms) like '%sputum%' THEN 1 ELSE 0 END as sputum,
+	CASE WHEN lower(symptoms) like '%chill%' THEN 1 ELSE 0 END as chills,
+	CASE WHEN lower(symptoms) like '%malaise%' THEN 1 ELSE 0 END as malaise,
 	CASE WHEN lower(symptoms) like '%breath%' THEN 1 ELSE 0 END as breath,
 	CASE WHEN lower(symptoms) like '%fatigue%' THEN 1 ELSE 0 END as fatigue,
 	CASE WHEN lower(symptoms) like '%diarrhea%' THEN 1 ELSE 0 END as diarrhea,
 	CASE WHEN lower(symptoms) like '%headache%' THEN 1 ELSE 0 END as headache,
-	CASE WHEN country = 'China' THEN 1 ELSE 0 END as from_china,
+	CASE WHEN lower(symptoms) like '%throat%' THEN 1 ELSE 0 END as throat_ache,
+	CASE WHEN lower(symptoms) like '%sorenes%' THEN 1 ELSE 0 END as soreness,
+	CASE WHEN lower(chronic_disease) is not null THEN 1 ELSE 0 END as precondition,
 	CASE WHEN lower(visit_hotspot) = '1.0' THEN 1 ELSE 0 END as visit_hotspot,
 	CASE WHEN lower(from_hotspot) = 'yes' THEN 1 ELSE 0 END as from_hotspot
 FROM individual_case_data_open	
