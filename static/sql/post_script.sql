@@ -105,3 +105,12 @@ WHERE age = '80-80';
 UPDATE individual_case_data_open
 SET age = '85'
 WHERE age = '80-89';
+
+
+update census_data
+set county = substring(county, 0, position(' County' in county))
+where county like '% County';
+
+update census_data
+set county = substring(county, 0, position(' city' in county))||' City'
+where county like '% city';
