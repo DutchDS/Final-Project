@@ -1,0 +1,155 @@
+html, body {
+    background-color: rgb(6, 28, 41);
+    background-repeat: no-repeat;
+    width: 100%;
+}
+
+body {
+    min-width: 1050px;
+}
+.navbar {
+    background-color: rgb(6, 28, 41);
+    color: white;
+    width: auto;
+}
+
+.navbar-toggler-icon {
+    background-color: lightblue;
+}
+
+.nav-link {
+    color:lightblue;
+}
+
+.btn,
+button {
+    color:lightblue;
+    margin-top: 5px;
+    /* background-color: white; */
+}
+
+.btn-outline-success {
+    border-color: lightblue;
+    
+}
+
+
+.btn-primary {
+    background-color:  rgb(6, 28, 41);
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #f7339e;
+    border-color: #285e8e; /*set the color you want here*/
+}
+
+#table-area {
+    color: white;
+    zoom: 100%';
+}
+
+.navbar-brand {
+    color:white;
+}
+
+
+h1 {
+    color: white;
+    font-size: 36px;
+}
+
+h2 {
+    color: white;
+    font-size: 48px;
+    letter-spacing: 3px;
+}
+
+#lat-img {
+    background-image: url("static/images/NY_Cool.jpg");
+}
+
+.m-top-175 {
+    margin-top: 30%;
+    margin-bottom: 100%;
+  }
+.row {
+    padding: 15px;
+}
+
+.m-top-75 {
+    margin-top: 75px;
+    background-color:rgb(6, 28, 41) ;
+    opacity: 75%;
+    color: white;
+  }
+
+.panel-body {
+   /* padding: 10px;  */
+   width: auto;
+}
+
+/* .table  {
+    table-layout:fixed;} */
+
+#table-comment{width: 50%}
+
+#selectDate, #selectCity, #selectCountry, #selectState, #selectShape, #datetime-form-input, #selectAll {
+      background-color: lightblue;
+      color: black;
+      margin: 5px;
+  }
+  
+  
+  @media(max-width: 780px) {
+
+
+  .table {
+      table-layout: auto;
+      width: 100%;}
+ 
+
+    body {
+        width: 780px;
+        background-image: url();
+    }
+
+    html {zoom: 37%;}
+
+  /* .style {
+        background-attachment: unset;
+        background-size: unset;
+        background-image: url();
+        background-color: rgb(6, 28, 41);
+  } */
+
+  .m-top-175 {
+    margin-top: 50%;
+    margin-bottom: 100%;
+  }
+
+  
+ .m-top-75 {
+    margin-top: 150px;
+    background-color:rgb(6, 28, 41) ;
+    opacity: 75%;
+    color: white;
+  }
+
+  #selectAll {
+        border-color: lightblue;
+        color: white;
+        background-color: rgb(6, 28, 41);
+    }
+  
+h2 {
+    text-align: left;
+}
+   .navbar {
+    background-color: rgb(45, 77, 95);
+    color: white;
+    width: auto;
+}
+
+
+}
