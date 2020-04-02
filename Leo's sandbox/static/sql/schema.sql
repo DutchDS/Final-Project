@@ -290,13 +290,13 @@ CREATE TABLE tests_and_hospital_data
     hospitalized double precision,
     death double precision,
     total bigint,
-    "dateChecked" date,
-    "totalTestResults" double precision,
-    "deathIncrease" double precision,
-    "hospitalizedIncrease" double precision,
-    "negativeIncrease" double precision,
-    "positiveIncrease" double precision,
-    "totalTestResultsIncrease" double precision,
+    date_checked date,
+    total_test_results double precision,
+    death_inc double precision,
+    hospitalized_inc double precision,
+    negative_inc double precision,
+    positive_inc double precision,
+    total_test_results_inc double precision,
 	CONSTRAINT "pk_tests_and_hospital_data" PRIMARY KEY (
         "id"
      )
