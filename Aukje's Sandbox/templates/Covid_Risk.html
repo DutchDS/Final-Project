@@ -7,16 +7,16 @@
 
 <!--JavaScript sourcing-->
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-            <script src="../static/JS/template.js"></script>
             <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <!--Link stylesheet and font apis-->
-            <link rel="stylesheet" type="text/css" href="template.css">
+            <link rel="stylesheet" type="text/css" href="static/CSS/Covid_Risk.css">
             <link href="https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700&display=swap" rel="stylesheet">
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald&display=swap">
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
 
-            <title>Page Title</title>
+            <title>Covid-19 Simulator | The Team</title>
+            <script src="https://d3js.org/d3.v5.min.js"></script>
         </head>
     <body>
         <header>
@@ -27,28 +27,108 @@
                     <div class="line"></div>
                 </div>
                 <ul>
-                    <li><a href="Covid_Home.html">Home</a></li>
-                    <li><a href="Covid_About.html" target="_blank">The Team</a></li>
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="#" target="_blank">The Team</a></li>
                     <li><a href="#" target="_blank">Dashboard</a></li>
-                    <li><a href="#" target="_blank">What Can You Do</a></li>
+                    <li><a href="/risk" target="_blank">Risk Calculator</a></li>
                     <li><a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html" target="_blank">CDC Site</a></li>
                 </ul>
             </nav>
         </header>
         <div class="container">
             <div id="welcome">
-                <h1 class="text-center">Title of Your Page</h1>
+                <h1 class="text-center">Risk Calculator</h1>
+                <h4 class="text-center">Are you at risk?</h4>
             </div>
             <div>
                 <div id="para"class="rounded shadow-lg bg-light mb-4">
                     <div id="about" class="ml-3 mt-2">
-                        <h3>Content Goes Into Other Div</h3>
+                        <h3><strong>Please select all that apply</strong></h3>
+                    <br>
                     </div>
-                    <div>
-                        <!--Insert your content here-->
-                    </div>
-            
-                </div>
+                        <div class=row>
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-4 col-sm-12">Gender
+                                <select class="form-control" id="selectGender" name="select-gender-from-list">
+                                </select>
+                            </div>
+                            <div class="col-lg-1"></div>
+                            <div class="col-lg-4 col-sm-12">Age
+                                <select class="form-control " id="selectAge" name="select-age-from-list">
+                                </select>
+                            </div>
+                        </div>
+                    <br>
+                        <div class=row>
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-10 col-sm-12"><strong>Other datapoints :</strong>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-2 col-sm-12">
+                                <input type='checkbox' id="from_hotspot">From Hotspot</input>
+                            </div>
+                            <div class="col-lg-2 col-sm-12">
+                                <input type='checkbox' id="visit_hotspot">Visited Hotspot</input>
+                            </div>
+                            <div class="col-lg-6"></div>
+                            <br>
+                            <br>
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-2 col-sm-12">
+                                <input type='checkbox' id="pneumonia">Pneumonia</input>
+                            </div>
+                            <div class="col-lg-2 col-sm-12">
+                                <input type='checkbox' id="fever">Fever</input>
+                            </div>
+                            <div class="col-lg-2 col-sm-12">
+                                <input type='checkbox' id="cough">Cough</input>
+                            </div>
+                            <div class="col-lg-2 col-sm-12">
+                                <input type='checkbox' id="sputum">Sputum</input>
+                            </div>
+                            <div class="col-lg-2 col-sm-12">
+                                <input type='checkbox' id="chills">Chills</input>
+                            </div>
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-2 col-sm-12">
+                                <input type='checkbox' id="malaise">Malaise</input>
+                            </div>
+                            <div class="col-lg-2 col-sm-12">
+                                <input type='checkbox' id="breath">Shortness of Breath</input>
+                            </div>
+                            <div class="col-lg-2 col-sm-12">
+                                <input type='checkbox' id="cough">Fatigue</input>
+                            </div>
+                            <div class="col-lg-2 col-sm-12">
+                                <input type='checkbox' id="diarrhea">Diarrhea</input>
+                            </div>
+                            <div class="col-lg-2 col-sm-12">
+                                <input type='checkbox' id="headache">Headache</input>
+                            </div>
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-2 col-sm-12">
+                                <input type='checkbox' id="throatache">Throatache</input>
+                            </div>
+                            <div class="col-lg-2 col-sm-12">
+                                <input type='checkbox' id="soreness">Soreness</input>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="col-lg-12"></div>
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-10 col-sm-12">
+                                <input type='checkbox' id="precondition">Pre-condition (Cardiovascular-, Chronic Respiratory Disease, Diabetes, Hyptertention, Cancer)</input>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="col-lg-10"></div>
+                            <button type="submit" class="btn btn-danger btn-outline-danger btn-lg" id="submitAll">
+                                Submit
+                            </button>
+                        </div>
+                    <br>
             </div>
             
         </div>
@@ -57,16 +137,16 @@
               <small>Copyright &copy; Covid-19 Simulator</small>
             </div>
         </footer>
-        
-            
-             <!-- D3 JavaScript -->
-             
-             <script src="https://d3js.org/d3.v5.min.js"></script>
-             <script src="https://d3js.org/d3.v5.js"></script>
-             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  
-            <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.3/d3.min.js"></script> -->
-            <!-- <script type="text/javascript" src="assets/JS/Chart_Race.js"></script> -->
+
+
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="https://d3js.org/d3.v5.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+        <!-- D3 JavaScript -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.3/d3.min.js"></script>
+
         </body>
+        <script src="static/JS/risk.js"></script>
     </html>

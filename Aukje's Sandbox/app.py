@@ -35,6 +35,6 @@ def home():
     return render_template("Covid_Home.html")
 
 @app.route("/risk")
-def risk():
-
+def risk(): 
+  
     return render_template("Covid_Risk.html")
