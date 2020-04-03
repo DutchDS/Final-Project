@@ -11,6 +11,7 @@ from sqlalchemy import create_engine
 from flask_sqlalchemy import SQLAlchemy
 import decimal
 import flask.json
+from run_models import model1, model2, model3, model4
 # import load_db
 
 app = Flask(__name__)

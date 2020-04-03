@@ -11,6 +11,7 @@ from sqlalchemy import create_engine
 from flask_sqlalchemy import SQLAlchemy
 import decimal
 import flask.json
+from run_models import model1, model2, model3, model4
 # import load_db
 
 app = Flask(__name__)
@@ -38,3 +39,18 @@ def home():
 def risk(): 
   
     return render_template("Covid_Risk.html")
+
+@app.route("/api/v1.0/model/<model><selFeatures>")
+def model(model, selFeatures): 
+    
+    result=""
+    if model == 'Classification':
+        result = model1(selFeatures)
+    elif model == 'Deep Learning':
+        result = model2(selFeatures)
+    elif model == 'Random Forest':
+        result = model3(selFeatures)
+    else:
+         result = model4(selFeatures)
+    
+    return result
