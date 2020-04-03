@@ -73,24 +73,41 @@ loadDropDowns("#selectAge",listAge);
 
 function preArray() {
 
-    let modelArray = []
+    let modelString = ""
 
     // Get all inputElement values - NEEDS TO BE COMPLETED FOR ALL FEATURES
+    let inputModel = d3.select("#selectModel").property("value");
+
     let inputGender = d3.select("#selectGender").property("value");
     let inputAge = d3.select("#selectAge").property("value");
-    let inputPneumonia = d3.select("#pneumonia").property("value");
-    let inputFever = d3.select("#fever").property("value");
-    let inputCough = d3.select("#cough").property("value");
+    
+    let inputPrecondition = $('#precondition:checked').val();
+    
+    let inputFromHotspot = $('#from_hotspot:checked').val();
+    let inputVisitHotspot = $('#visit_hotspot:checked').val();
 
-    console.log(inputGender);
-    console.log(inputAge);
-    console.log(inputPneumonia);
-    console.log(inputFever);
-    console.log(inputCough);
+    let inputPneumonia = $('#pneumonia:checked').val();
+    let inputFever = $('#fever:checked').val();
+    let inputCough = $('#cough:checked').val();
 
-    return modelArray
+    console.log("Model:", inputModel);
+    console.log("Gender: ", inputGender);
+    console.log("Age: ", inputAge);
+    console.log("Precondition: ", inputPrecondition);
+    console.log("From Hotspot: ", inputFromHotspot);
+    console.log("Visit Hotspot :", inputVisitHotspot);
+     
+    console.log("Pneumonia: ", inputPneumonia);
+    console.log("Fever: ", inputFever);
+    console.log("Cough: ",inputCough);
+
+    return modelString
 
 }
 
 // WE HAVE TO THINK ABOUT THIS ONE.... On Submit the page should be redirected to an endpoint from FLASK
-get_submit.on("click", function() {preArray()});
+get_submit.on("click", function() {
+  
+    preString = preArray()
+  
+  });
