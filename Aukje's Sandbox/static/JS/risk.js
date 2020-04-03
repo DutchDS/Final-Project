@@ -10,6 +10,8 @@ window.onbeforeunload = function () {
 
 // Get a reference to the page tags
 //##################################
+var get_model = d3.select("#selectModel");
+
 var get_gender = d3.select("#selectGender");
 var get_age = d3.select("#selectAge");
 
@@ -33,12 +35,15 @@ var get_precondition = d3.select("#precondition");
 
 var get_submit = d3.select("#submitAll");
 
+var listModel = [];
 var listGender = [];
 var listAge = [];
 
+listModel = ['Classification','Decision Tree','Random Forest','K-Nearest Neighbor']
 listGender = ['Male','Female']
 listAge = ['< 39 years old','40 - 49 years old','50 - 59 years old','60 - 69 years old','70 - 79 years old','> 80 years old']
 
+console.log(listModel);
 console.log(listGender);
 console.log(listAge);
 
@@ -60,6 +65,7 @@ function loadDropDowns(myId, myshortList) {
     };
 
 // Fill dropdowns with shortLists
+loadDropDowns("#selectModel",listModel);
 loadDropDowns("#selectGender",listGender);
 loadDropDowns("#selectAge",listAge);
 
