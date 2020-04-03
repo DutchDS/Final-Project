@@ -44,11 +44,11 @@ def risk():
 def model(model, selFeatures): 
     
     result=""
-    if model == 'Classification':
+    if model == 'MODEL1':
         result = model1(selFeatures)
-    elif model == 'Deep Learning':
+    elif model == 'MODEL2':
         result = model2(selFeatures)
-    elif model == 'Random Forest':
+    elif model == 'MODEL3':
         result = model3(selFeatures)
     else:
          result = model4(selFeatures)
