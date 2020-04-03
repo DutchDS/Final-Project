@@ -52,5 +52,6 @@ def model(model, selFeatures):
         result = model3(selFeatures)
     else:
          result = model4(selFeatures)
-    
-    return result
+    print(result)
+    print(str(result[0]))
+    return jsonify(str(result[0]))

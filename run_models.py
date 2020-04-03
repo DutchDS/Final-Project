@@ -1,11 +1,13 @@
 # Load Libraries
 import os
 import pandas as pd
-import tensorflow as tf
-from tensorflow.keras.models import load_model
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.utils import to_categorical
-from tensorflow.keras.layers import Dense
+import tensorflow
+from tensorflow import keras
+# from keras import model
+from keras.models import load_model
+# from tensorflow.keras.models import Sequential
+# from tensorflow.keras.utils import to_categorical
+# from tensorflow.keras.layers import Dense
 import numpy as np
 import joblib
 import random
