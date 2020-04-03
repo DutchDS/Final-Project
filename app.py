@@ -40,15 +40,15 @@ def risk():
   
     return render_template("Covid_Risk.html")
 
-@app.route("/api/v1.0/model/<model><selFeatures>")
+@app.route("/api/v1.0/<model>/<selFeatures>")
 def model(model, selFeatures): 
     
     result=""
-    if model == 'MODEL1':
+    if model == 'model1':
         result = model1(selFeatures)
-    elif model == 'MODEL2':
+    elif model == 'model2':
         result = model2(selFeatures)
-    elif model == 'MODEL3':
+    elif model == 'model3':
         result = model3(selFeatures)
     else:
          result = model4(selFeatures)

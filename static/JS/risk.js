@@ -15,23 +15,23 @@ var get_model = d3.select("#selectModel");
 var get_gender = d3.select("#selectGender");
 var get_age = d3.select("#selectAge");
 
-var get_from_hotspot = d3.select("#from_hotspot");
-var get_visit_hotspot = d3.select("#visit_hotspot");
+// var get_from_hotspot = d3.select("#from_hotspot");
+// var get_visit_hotspot = d3.select("#visit_hotspot");
 
-var get_pneumonia = d3.select("#pneumonia");
-var get_fever = d3.select("#fever");
-var get_cough = d3.select("#cough");
-var get_sputum = d3.select("#sputum");
-var get_chills = d3.select("#chills");
-var get_malaise = d3.select("#malaise");
-var get_breath = d3.select("#breath");
-var get_fatique = d3.select("#fatigue");
-var get_diarrhea = d3.select("#diarrhea");
-var get_headache = d3.select("#headache");
-var get_throatache = d3.select("#throatache");
-var get_soreness = d3.select("#soreness");
+// var get_pneumonia = d3.select("#pneumonia");
+// var get_fever = d3.select("#fever");
+// var get_cough = d3.select("#cough");
+// var get_sputum = d3.select("#sputum");
+// var get_chills = d3.select("#chills");
+// var get_malaise = d3.select("#malaise");
+// var get_breath = d3.select("#breath");
+// var get_fatigue = d3.select("#fatigue");
+// var get_diarrhea = d3.select("#diarrhea");
+// var get_headache = d3.select("#headache");
+// var get_throatache = d3.select("#throatache");
+// var get_soreness = d3.select("#soreness");
 
-var get_precondition = d3.select("#precondition");
+// var get_precondition = d3.select("#precondition");
 
 var get_submit = d3.select("#submitAll");
 
@@ -74,6 +74,7 @@ loadDropDowns("#selectAge",listAge);
 function preArray() {
 
     let modelString = ""
+    let chosenModel = ""
 
     // Get all inputElement values - NEEDS TO BE COMPLETED FOR ALL FEATURES
     let inputModel = d3.select("#selectModel").property("value");
@@ -89,6 +90,17 @@ function preArray() {
     let inputPneumonia = $('#pneumonia:checked').val();
     let inputFever = $('#fever:checked').val();
     let inputCough = $('#cough:checked').val();
+    let inputSputum = $('#sputum:checked').val();
+    let inputChills = $('#chills:checked').val();
+
+    let inputMalaise = $('#malaise:checked').val();
+    let inputBreath = $('#breath:checked').val();
+    let inputFatigue = $('#fatigue:checked').val();
+    let inputDiarrhea = $('#diarrhea:checked').val();
+    let inputHeadache = $('#headache:checked').val();
+
+    let inputThroatAche = $('#throatache:checked').val();
+    let inputSoreness = $('#soreness:checked').val();
 
     console.log("Model:", inputModel);
     console.log("Gender: ", inputGender);
@@ -99,15 +111,80 @@ function preArray() {
      
     console.log("Pneumonia: ", inputPneumonia);
     console.log("Fever: ", inputFever);
-    console.log("Cough: ",inputCough);
+    console.log("Cough: ", inputCough);
+    console.log("Sputum: ", inputSputum);
+    console.log("Chills: ",inputChills);
 
-    return modelString
+    console.log("Malaise: ", inputMalaise);
+    console.log("Shortness Of Breath: ", inputBreath);
+    console.log("Fatigue: ", inputFatigue);
+    console.log("Diarrhea: ", inputDiarrhea);
+    console.log("Headache: ",inputHeadache);
+
+    console.log("Throat Ache: ", inputThroatAche);
+    console.log("Soreness: ",inputSoreness);
+
+    if (inputModel=='Classification') {chosenModel='model1';}
+      else if (inputModel=='Deep Learning') {chosenModel='model2'}
+      else if (inputModel=='Random Forest') {chosenModel='model3'}
+      else {chosenModel='model4'};
+
+    if (inputGender=='Male') {s1="1"} else {s1 = "0";};
+    if (inputGender=='Female') {s2="1"} else {s2 = "0";};
+
+    if (inputAge=='< 39 years old') {s3="1"} else {s3 = "0";};
+    if (inputAge=='40 - 49 years old') {s4="1"} else {s4 = "0";};
+    if (inputAge=='50 - 59 years old') {s5="1"} else {s5 = "0";};
+    if (inputAge=='60 - 69 years old') {s6="1"} else {s6 = "0";};
+    if (inputAge=='70 - 79 years old') {s7="1"} else {s7 = "0";};
+    if (inputAge=='> 80 years old') {s8="1"} else {s8 = "0";};
+
+    if (inputPrecondition==0) {s9 = "1";} else {s9 = "0";};
+    if (inputFromHotspot==0) {s10 = "1";} else {s10 = "0";};
+    if (inputVisitHotspot==0) {s11 = "1";} else {s11 = "0";};
+    if (inputPneumonia==0) {s12 = "1";} else {s12 = "0";};
+    if (inputFever==0) {s13 = "1";} else {s13 = "0";};
+    if (inputCough==0) {s14 = "1";} else {s14 = "0";};
+    if (inputSputum==0) {s15 = "1";} else {s15 = "0";};
+    if (inputChills==0) {s16 = "1";} else {s16 = "0";};
+    if (inputMalaise==0) {s17 = "1";} else {s17 = "0";};
+    if (inputBreath==0) {s18 = "1";} else {s18 = "0";};
+    if (inputFatigue==0) {s19 = "1";} else {s19 = "0";};
+    if (inputDiarrhea==0) {s20 = "1";} else {s20 = "0";};
+    if (inputHeadache==0) {s21 = "1";} else {s21 = "0";};
+    if (inputThroatAche==0) {s22 = "1";} else {s22 = "0";};
+    if (inputSoreness==0) {s23 = "1";} else {s23 = "0";};
+
+
+
+    modelString = s1+s2+s3+s4+s5+s6+s7+s8+s9+s10+s11+s12+s13+s14+s15+s16+s17+s18+s19+s20+s21+s22+s23
+    console.log(chosenModel)
+    console.log(modelString)
+    return [chosenModel, modelString]
 
 }
 
 // WE HAVE TO THINK ABOUT THIS ONE.... On Submit the page should be redirected to an endpoint from FLASK
 get_submit.on("click", function() {
   
-    preString = preArray()
+    let chosenModel = ""
+    let modelString = ""
+    let returnValues = []
+    
+    returnValues = preArray()
+    chosenModel = returnValues[0]
+    modelString = returnValues[1]
+
+    console.log(chosenModel)
+    console.log(modelString)
+    
+    url = "/api/v1.0/"+chosenModel+"/"+modelString
+
+    console.log(url)
+
+    d3.json(url).then(function(response) {
+      console.log(response)
   
+
+      })
   });
