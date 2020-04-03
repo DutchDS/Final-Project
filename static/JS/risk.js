@@ -39,7 +39,7 @@ var listModel = [];
 var listGender = [];
 var listAge = [];
 
-listModel = ['Classification','Decision Tree','Random Forest','K-Nearest Neighbor']
+listModel = ['Classification','Deep Learning','Random Forest','K-Nearest Neighbor']
 listGender = ['Male','Female']
 listAge = ['< 39 years old','40 - 49 years old','50 - 59 years old','60 - 69 years old','70 - 79 years old','> 80 years old']
 
