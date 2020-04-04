@@ -306,3 +306,7 @@ nav {
 #sticky-footer {
     transform: translateY(42em);
 }
+
+#sticky-footer p {
+  font-size: 10px;
+}
