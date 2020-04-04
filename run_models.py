@@ -1,13 +1,13 @@
 # Load Libraries
 import os
 import pandas as pd
-import tensorflow
+import tensorflow as tf
+import keras
 from tensorflow import keras
-# from keras import model
 from keras.models import load_model
-# from tensorflow.keras.models import Sequential
-# from tensorflow.keras.utils import to_categorical
-# from tensorflow.keras.layers import Dense
+from keras.models import Sequential
+from keras.utils import to_categorical
+from keras.layers import Dense
 import numpy as np
 import joblib
 import random
@@ -34,7 +34,7 @@ def model2(selFeatures):
     test=np.array(Feature_list, dtype=np.int32).reshape(1,-1)
 
     # Load the models
-    model2 = load_model("static/model/best_dl.h5") 
+    model2 = tf.keras.models.load_model("static/model/best_dl.h5") 
         
     prediction2 = model2.predict_classes(test)
     print(prediction2)
