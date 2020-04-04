@@ -15,24 +15,6 @@ var get_model = d3.select("#selectModel");
 var get_gender = d3.select("#selectGender");
 var get_age = d3.select("#selectAge");
 
-// var get_from_hotspot = d3.select("#from_hotspot");
-// var get_visit_hotspot = d3.select("#visit_hotspot");
-
-// var get_pneumonia = d3.select("#pneumonia");
-// var get_fever = d3.select("#fever");
-// var get_cough = d3.select("#cough");
-// var get_sputum = d3.select("#sputum");
-// var get_chills = d3.select("#chills");
-// var get_malaise = d3.select("#malaise");
-// var get_breath = d3.select("#breath");
-// var get_fatigue = d3.select("#fatigue");
-// var get_diarrhea = d3.select("#diarrhea");
-// var get_headache = d3.select("#headache");
-// var get_throatache = d3.select("#throatache");
-// var get_soreness = d3.select("#soreness");
-
-// var get_precondition = d3.select("#precondition");
-
 var get_submit = d3.select("#submitAll");
 
 var listModel = [];
@@ -58,16 +40,12 @@ function loadDropDowns(myId, myshortList) {
     
     myshortList.forEach((f) => {
       console.log(f);
-      var cell = inputDate.append("option")
+      cell = inputDate.append("option")
       cell.text(f);
   
       });
     };
 
-// Fill dropdowns with shortLists
-loadDropDowns("#selectModel",listModel);
-loadDropDowns("#selectGender",listGender);
-loadDropDowns("#selectAge",listAge);
 
 // Lastly put together an array for the prediction models - modelArray needs all 0's and 1' equal to what the model is expecting
 
@@ -164,6 +142,12 @@ function preArray() {
 
 }
 
+
+// Fill dropdowns with shortLists
+loadDropDowns("#selectModel",listModel);
+loadDropDowns("#selectGender",listGender);
+loadDropDowns("#selectAge",listAge);
+
 // WE HAVE TO THINK ABOUT THIS ONE.... On Submit the page should be redirected to an endpoint from FLASK
 get_submit.on("click", function() {
   
@@ -183,8 +167,19 @@ get_submit.on("click", function() {
     console.log(url)
 
     d3.json(url).then(function(response) {
+      
       console.log(response)
-  
 
+      // $('#message').dialog()
+
+      if (response == 1) {
+        alert("Based on statistics, things aren't looking so well. Please see a doctor as soon as possible!" );
+      } else if (response == 2) {
+        alert("Your situation is severe, you will most likely have to go to the hospital!")
+      } else if (response == 3) { 
+        alert("You have will most likely be able to get well at home!" ) 
+      } else {alert ("Something went wrong, please try again")}
+
+      
       })
   });
