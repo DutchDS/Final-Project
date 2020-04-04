@@ -110,13 +110,13 @@ body {
 
 .enter-button {
   position: absolute;
-  font-family: 'Oswald', sans-serif;
-  border: 2px solid #A61414;
-  color: #A61414;
-  background: none;
+  font-family: 'Oswald', sans-serif !important;
+  border: 2px solid #A61414 !important;
+  color: #A61414 !important;
+  background: none !important;
   font-size: 25px !important;
   padding: 2px 40px;
-  cursor: pointer;
+  cursor: pointer !important;
   overflow: hidden;
   transition: 1.5s;
 }
