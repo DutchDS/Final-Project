@@ -8,7 +8,7 @@ am4core.useTheme(am4themes_animated);
 let chart = am4core.create("bar-race", am4charts.XYChart);
 
 // Add data
-chart.dataSource.url = "/static/data/states_total.csv";
+chart.dataSource.url = "/jupyter files/states_total.csv";
 chart.dataSource.parser = new am4core.CSVParser();
 chart.dataSource.parser.options.useColumnNames = true;
 chart.numberFormatter.bigNumberPrefixes = [

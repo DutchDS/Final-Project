@@ -85,6 +85,19 @@ body {
   transform: translateY(30em);
 }
 
+/* #bar-race {
+  transform: translateY(40em);
+} */
+#bar-race {
+  background-color: #30303d;
+  width: 100%;
+  height: 800px;
+}
+
+/* #bar-race path {
+  fill: #337d7d !important;
+} */
+
 /*
 ==================================
 3. Hamburger Nav 
@@ -158,7 +171,7 @@ nav {
 ==================================
 */
 
-.container {
+/* .container {
     animation: fadeIn ease 5s;
     -webkit-animation: fadeIn ease 8s;
     -moz-animation: fadeIn ease 8s;
@@ -209,7 +222,7 @@ nav {
     100% {
       opacity:1;
   }
-}
+} */
 
 #hamburger {
     animation: fadeIn ease 5s;
@@ -304,5 +317,5 @@ nav {
 */
 
 #sticky-footer {
-    transform: translateY(42em);
+    transform: translateY(50em);
 }
