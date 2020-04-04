@@ -52,9 +52,9 @@ body {
     transition: 0.9s !important;
 }
 
-#welcome h1{
+#welcome h1 , h4{
     font-size: 60px;
-    color: #337d7d;
+    color: #337d7d !important;
     font-weight: lighter !important;
     transition: 0.6s;
 }
@@ -83,6 +83,73 @@ body {
 
 #tableau-box {
   transform: translateY(30em);
+}
+
+#headers h4 {
+  font-size: 20px;
+  color: #337d7d !important;
+}
+
+#headers h5 {
+  font-size: 18px;
+  color: #337d7d !important;
+  font-weight: lighter !important;
+}
+
+#feature {
+  font-size: 14px;
+  color: #337d7d !important;
+  font-weight: lighter !important;
+}
+
+#symptom {
+  font-size: 14px;
+  font-weight: lighter;
+  color: #337d7d;
+}
+
+.enter-button {
+  position: absolute;
+  font-family: 'Oswald', sans-serif !important;
+  border: 2px solid #A61414 !important;
+  color: #A61414 !important;
+  background: none !important;
+  font-size: 25px !important;
+  padding: 2px 40px;
+  cursor: pointer !important;
+  overflow: hidden;
+  transition: 1.5s;
+}
+
+.enter-button:hover {
+  color: white !important;
+}
+
+.enter-button:before {
+  top: 0;
+  border-radius: 0 0 40% 40%;
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: #A61414;
+  z-index: -1;
+  transition: 0.9s;
+}
+
+.enter-button:hover:before {
+  height: 170%;
+}
+
+#button {
+  position: relative;
+}
+
+.enter-button {
+  margin: auto;
+  bottom: 30%;
+  right: 52% !important;
 }
 
 /*
