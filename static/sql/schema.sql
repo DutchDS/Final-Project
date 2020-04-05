@@ -510,3 +510,12 @@ SELECT 'closed' as status, * FROM case_study_1_v
 UNION
 SELECT 'open', * FROM case_study_2_v 
 );
+DROP VIEW IF EXISTS covid_new_cases_death_by_state;
+
+create view covid_new_cases_death_by_state as (
+select date,s.state_name,pos_inc as new_cases,hospital_inc as new_hospitalizations,death_inc as new_deaths 
+    from covid_data_states c 
+    join states_data s 
+    on c.state = s.state 
+    order by c.state, date
+);
