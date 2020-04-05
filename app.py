@@ -74,3 +74,32 @@ def model(model, selFeatures):
     x = (str(result[0]))
     print(x)
     return x
+
+
+@app.route("/api/v1.0/bar_states")
+def bar_states(): 
+    result_set = []
+    
+    query_str = open('static/sql/bar_by_state.sql')
+    query_text = ""
+    
+    for text in query_str:
+        query_text = query_text + text
+        
+    result_set = engine.execute(query_text)
+    
+    all_results = []
+    for date, state, pos_at_home, hospitalized_curr, recovered, death, new_cases, new_hospitalizations, new_deaths in result_set:
+        results_dict = {}
+        results_dict["date"] = date
+        results_dict["state"] = state
+        results_dict["pos_at_home"] = pos_at_home
+        results_dict["hospitalized_curr"] = hospitalized_curr
+        results_dict["recovered"] = recovered
+        results_dict["death"] = death
+        results_dict["new_cases"] = new_cases
+        results_dict["new_hospitalizations"] = new_hospitalizations
+        results_dict["new_deaths"] = new_deaths
+        all_results.append(results_dict)
+
+    return jsonify(all_results)
