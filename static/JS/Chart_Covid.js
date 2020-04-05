@@ -10,6 +10,10 @@ window.onbeforeunload = function () {
 
 var url = "/api/v1.0/bar_states";
 var get_shape = d3.select("#selectShape");
+
+var url_countries = "/api/v1.0/bar_countries";
+var get_country = d3.select("#selectCountry");
+
 // var get_date = $("#selectDate").text();
 // var last_DB_date = $("#selectDate").text();
 
@@ -42,9 +46,40 @@ function get_data(state) {d3.json(url).then(function(response) {
     create_chart(chart_data)
 })}
 
+
+function get_data_country(country) {d3.json(url_countries).then(function(response) {
+    console.log("in the d3.json NEW part")
+    console.log(response);
+
+    var shortShapes = []
+    // var today = new Date()
+    // var yesterday =  formatDate(today.setDate(today.getDate() - 1));
+
+    for (var i in response) {
+        if (formatDate(response[i].date) == '2020-04-01')
+            shortShapes.push(response[i].country)
+        }
+
+    var chart_data = []   
+
+    console.log(country)
+    
+    if (country == "All")
+        chart_data = response
+    else
+        chart_data =  response.filter(response => {return response.country == country});
+
+    console.log(shortShapes)        
+    loadDropDowns("#selectCountry",shortShapes,"Select Country");
+    create_chart_countries(chart_data)
+    console.log(chart_data)
+})}
+
 var state = 'All'
+var country = 'All'
 
 get_data(state);
+get_data_country(country)
 console.log("went through the states_bar script")
 
 function create_chart(bar_data) {   
@@ -225,6 +260,89 @@ var barLayout3 = {
     console.log("Plot done")
 }
 
+function create_chart_countries(bar_data) {   
+
+    console.log(bar_data)
+    bar_dates = []
+    bar_positive = []
+    bar_recovered = []
+    bar_deceased = []
+
+    for (var i in bar_data) {
+        bar_positive.push(bar_data[i].positive)
+        bar_recovered.push(bar_data[i].recovered)
+        bar_deceased.push(bar_data[i].deceased)
+        bar_dates.push(formatDate(bar_data[i].date))
+    }
+
+    x_values = bar_dates
+
+    y_trace1 = bar_positive;
+    y_trace3 = bar_recovered;
+    y_trace4 = bar_deceased;
+
+
+console.log(x_values)
+console.log(y_trace1)
+
+var trace1 = {
+    x: x_values,
+    y: y_trace1,
+    name: "Positive at Home",
+    type: "bar",
+    marker: {
+        color: '#91dada'
+      }
+}
+var trace3 = {
+    x: x_values,
+    y: y_trace3,
+    name: "Recovered",
+    type: "bar",
+    marker: {
+        color: 'lightgreen'
+      }
+}
+var trace4 = {
+    x: x_values,
+    y: y_trace4,
+    name: "Deceased",
+    type: "bar",
+    marker: {
+        color: 'red'
+      }
+}    
+var barData = [trace1, trace3, trace4]
+
+var barLayout = {
+        barmode:"stack", 
+        title: { text: "Virus spread over time for: " + country ,
+                font: {
+                    family: 'Oswald',
+                    size: 24
+                    }
+                },
+        legend: {
+            orientation: 'h',
+            x: 0.25, 
+            y: 1.15
+                },
+        // paper_bgcolor: "#0e173d",
+                font: {
+                    family: 'Oswald',
+                    size: 16
+                    },
+        yaxis: {fixedrange: true},
+        xaxis: {fixedrange: true}
+        
+
+    };
+
+    Plotly.newPlot("bar_country", barData, barLayout);
+    console.log("Plot done")
+}
+
+
 function loadDropDowns(myId, myshortList, myText) {
     // var tbody = d3.select("tbody");
     var inputDate = d3.select(myId) 
@@ -256,9 +374,15 @@ function formatDate(date) {
     return [year, month, day].join('-');
     }
 
-    get_shape.on("change", function() {
-        let inputValueShape = d3.select("#selectShape").property("value");
-        state = inputValueShape
-        console.log(state)
-        get_data(state)});
+get_shape.on("change", function() {
+    let inputValueShape = d3.select("#selectShape").property("value");
+    state = inputValueShape
+    console.log(state)
+    get_data(state)});
+
+get_country.on("change", function() {
+    let inputValueCountry = d3.select("#selectCountry").property("value");
+    country = inputValueCountry
+    console.log(country)
+    get_data_country(country)});
 

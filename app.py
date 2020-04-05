@@ -103,3 +103,28 @@ def bar_states():
         all_results.append(results_dict)
 
     return jsonify(all_results)
+
+
+@app.route("/api/v1.0/bar_countries")
+def bar_countries(): 
+    result_set = []
+    
+    query_str = open('static/sql/bar_by_country.sql')
+    query_text = ""
+    
+    for text in query_str:
+        query_text = query_text + text
+        
+    result_set = engine.execute(query_text)
+    
+    all_results = []
+    for date, country, positive, recovered, deceased in result_set:
+        results_dict = {}
+        results_dict["date"] = date
+        results_dict["country"] = country
+        results_dict["positive"] = positive
+        results_dict["recovered"] = recovered
+        results_dict["deceased"] = deceased
+        all_results.append(results_dict)
+
+    return jsonify(all_results)
