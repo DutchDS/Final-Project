@@ -312,9 +312,9 @@ var trace4 = {
         color: 'red'
       }
 }    
-var barData = [trace1, trace3, trace4]
+var barData4 = [trace1, trace3, trace4]
 
-var barLayout = {
+var barLayout4 = {
         barmode:"stack", 
         title: { text: "Virus spread over time for: " + country ,
                 font: {
@@ -338,7 +338,7 @@ var barLayout = {
 
     };
 
-    Plotly.newPlot("bar_country", barData, barLayout);
+    Plotly.newPlot("bar_country", barData4, barLayout4);
     console.log("Plot done")
 }
 
