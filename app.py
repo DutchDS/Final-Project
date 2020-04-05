@@ -44,6 +44,16 @@ def risk():
   
     return render_template("Covid_Risk.html")
 
+@app.route("/viz")
+def viz(): 
+  
+    return render_template("Covid_Home.html")
+
+@app.route("/charts")
+def charts(): 
+  
+    return render_template("Covid_Charts.html")
+
 @app.route("/api/v1.0/<model>/<selFeatures>")
 def model(model, selFeatures): 
     
