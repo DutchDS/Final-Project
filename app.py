@@ -128,3 +128,52 @@ def bar_countries():
         all_results.append(results_dict)
 
     return jsonify(all_results)
+
+
+    
+@app.route("/api/v1.0/bar_counties")
+def bar_counties(): 
+    result_set = []
+    
+    query_str = open('static/sql/bar_by_county.sql')
+    query_text = ""
+    
+    for text in query_str:
+        query_text = query_text + text
+        
+    result_set = engine.execute(query_text)
+    
+    all_results = []
+    for date, state, county, positive, recovered, deceased in result_set:
+        results_dict = {}
+        results_dict["date"] = date
+        results_dict["state"] = state
+        results_dict["county"] = county
+        results_dict["positive"] = positive
+        results_dict["recovered"] = recovered
+        results_dict["deceased"] = deceased
+        all_results.append(results_dict)
+
+    return jsonify(all_results)
+
+@app.route("/api/v1.0/counties_list")
+def counties_list(): 
+    result_set = []
+    
+    query_str = open('static/sql/counties_list.sql')
+    query_text = ""
+    
+    for text in query_str:
+        query_text = query_text + text
+        
+    result_set = engine.execute(query_text)
+    
+    all_results = []
+    for state, county, date in result_set:
+        results_dict = {}
+        results_dict["state"] = state
+        results_dict["county"] = county
+        results_dict["date"] = date
+        all_results.append(results_dict)
+
+    return jsonify(all_results)
