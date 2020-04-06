@@ -487,8 +487,8 @@ function loadDropDown_Counties(myId, state, myText) {d3.json(url_get_counties).t
 
 function formatDate(date) {
     var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
+        month = '' + (d.getUTCMonth() + 1),
+        day = '' + d.getUTCDate(),
         year = d.getFullYear();
     
     if (month.length < 2) 
