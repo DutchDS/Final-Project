@@ -148,14 +148,6 @@ loadDropDowns("#selectModel",listModel);
 loadDropDowns("#selectGender",listGender);
 loadDropDowns("#selectAge",listAge);
 
-//This is to show the alert box
-// function newAlert() {
-//   // document.getElementById('alert').style.display = 'table';
-//   $("#alert").css("display","table")
-//   console.log('something is working!');
-//   }
-
-
 // WE HAVE TO THINK ABOUT THIS ONE.... On Submit the page should be redirected to an endpoint from FLASK
 get_submit.on("click", function() {
   
@@ -178,59 +170,16 @@ get_submit.on("click", function() {
       
       console.log(response)
 
+      // $('#message').dialog()
+
       if (response == 1) {
-        // alert("Based on statistics, things aren't looking so well. Please see a doctor as soon as possible!" );
-        $(document).ready(function(){
-          $("#alert-message").html("");
-          $("#alert-message").append("Based on statistics, things aren't looking so well. Please see a doctor as soon as possible!");
-        });
-      } 
-      else if (response == 2) {
-        // alert("Your situation is severe, you will most likely have to go to the hospital!")
-        $(document).ready(function(){
-          $("#alert-message").html("");
-          $("#alert-message").append("Your situation is severe, you will most likely have to go to the hospital!");
-        });
-
-      } 
-      else if (response == 3) { 
-        // alert("You have will most likely be able to get well at home!" ) 
-        $(document).ready(function(){
-          $("#alert-message").html("");
-          $("#alert-message").append("You have will most likely be able to get well at home!");
-        });
-
-      } 
-      else {
-        // alert ("Something went wrong, please try again")
-        $(document).ready(function(){
-          $("#alert-message").html("");
-          $("#alert-message").append("Something went wrong, please try again");
-        });
-
-      }
+        alert("Based on statistics, things aren't looking so well. Please see a doctor as soon as possible!" );
+      } else if (response == 2) {
+        alert("Your situation is severe, you will most likely have to go to the hospital!")
+      } else if (response == 3) { 
+        alert("You have will most likely be able to get well at home!" ) 
+      } else {alert ("Something went wrong, please try again")}
 
       
       })
   });
-//opens the alert box
-  $(document).ready(function(){
-    $("#submitAll").click(function() {
-      $("#alert")
-      .css("display","table")
-      .animate({opacity : 1}, 250);
-      // .animate({opacity: 1}, 250)
-    });
-  });
-
-//closes alert box
-  $(document).ready(function(){
-    $(".note-close").click(function() {
-      $("#alert")
-      .css("display","none");
-    });
-  });
-
-
-
-  

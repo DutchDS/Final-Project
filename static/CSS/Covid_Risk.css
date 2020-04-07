@@ -152,6 +152,104 @@ body {
   right: 52% !important;
 }
 
+/* #alert-1 {
+  transform: translateY(90em);
+} */
+
+#alert {
+  height: 200px;
+  display: none;
+  width: 90%;
+  left: 50px;
+}
+
+.flag-image, .flag-body {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.flag-image, .flag-body {
+  vertical-align: top;
+}
+
+.flag-image, .flag-body {
+  vertical-align: bottom;
+}
+
+.flag-image {
+  padding-right: 24px;
+}
+
+.flag-image {
+  padding-right: 0;
+  padding-left: 30px;
+}
+
+.flag-body {
+  width: 100%;
+}
+
+.note {
+  position: relative;
+  overflow: hidden;
+  color: white;
+  background-color: white;
+  box-shadow: 5px 10px 20px grey;
+}
+
+.note-text {
+  padding-right: 48px;
+}
+
+.note-icon, .note-text {
+  padding: 30px;
+}
+
+.note-icon {
+  min-width: 50px !important;
+  font-size: 50px;
+  background-color: rgba(55, 110, 119, 0.9);
+}
+
+.note-icon svg {
+  transform: translateY(-70%);
+}
+
+
+.note-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 29px;
+  line-height: 28px;
+  font-size: 30px;
+  text-align: center;
+  color: white;
+  background-color: rgba(55, 110, 119, 0.25);
+  transition: all 0.25s;
+}
+
+.note-close:hover {
+  background-color: #337d7d;
+}
+
+#alert #point .note-close:hover {
+  cursor: pointer !important;
+}
+
+.m #alert-message {
+  width: 100%;
+}
+
+
+#alert-message {
+  color: #337d7d;
+  font-size: 25px;
+  z-index: 3;
+  text-align: center;
+  transform: translateY(-55%);
+}
+
 /*
 ==================================
 3. Hamburger Nav 
@@ -337,7 +435,7 @@ nav {
 ==================================
 */
 
-@media (max-width: 475px) {
+@media (max-width: 450px) {
     .container h1 {
         font-size: 30px;
     }
@@ -360,6 +458,24 @@ nav {
     #hamburger .menu {
         top: 20px;
         left: 230px;
+    }
+
+    .note-icon {
+      min-width: 30px !important;
+      font-size: 30px;
+    }
+
+    #alert {
+      height: 60px;
+      display: none;
+      transform: translateX(-10%);
+    }
+
+    #alert-message {
+      color: #337d7d;
+      font-size: 15px;
+      text-align: center;
+      transform: translateY(-30%);
     }
 
 }
