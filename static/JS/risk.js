@@ -21,7 +21,9 @@ var listModel = [];
 var listGender = [];
 var listAge = [];
 
-listModel = ['Classification','Deep Learning','Random Forest','K-Nearest Neighbor']
+// listModel = ['Classification','Deep Learning','Random Forest','K-Nearest Neighbor']
+listModel = ['Classification','Random Forest','K-Nearest Neighbor']
+
 listGender = ['Male','Female']
 listAge = ['< 39 years old','40 - 49 years old','50 - 59 years old','60 - 69 years old','70 - 79 years old','> 80 years old']
 
@@ -103,7 +105,7 @@ function preArray() {
     console.log("Soreness: ",inputSoreness);
 
     if (inputModel=='Classification') {chosenModel='model1';}
-      else if (inputModel=='Deep Learning') {chosenModel='model2'}
+      // else if (inputModel=='Deep Learning') {chosenModel='model2'}
       else if (inputModel=='Random Forest') {chosenModel='model3'}
       else {chosenModel='model4'};
 
