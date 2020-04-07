@@ -173,8 +173,12 @@ get_submit.on("click", function() {
     console.log(modelString)
     
     url = "/api/v1.0/"+chosenModel+"/"+modelString
+    url_model =  "/api/v1.0/bar_model/"+modelString
 
     console.log(url)
+    console.log(url_model)
+
+    get_model_data(url_model)
 
     d3.json(url).then(function(response) {
       
@@ -234,5 +238,84 @@ get_submit.on("click", function() {
   });
 
 
+function get_model_data(url_model) {d3.json(url_model).then(function(response) {
+    console.log("in the model part")
+    console.log(url_model)
+    console.log(response);
 
+    chart_data = response
+
+    create_model_chart(chart_data)
+    // create_chart_countries(chart_data)
+})}
   
+
+function create_model_chart(bar_data) {   
+
+  console.log(bar_data)
+  bar_model = []
+  bar_train_score = []
+  bar_test_score = []
+
+  for (var i in bar_data) {
+      bar_model.push(bar_data[i].bar_model)
+      bar_train_score.push(bar_data[i].bar_train_score)
+      bar_test_score.push(bar_data[i].bar_test_score)
+  }
+
+  x_values = bar_model
+
+  y_trace1 = bar_train_score;
+  y_trace2 = bar_test_score;
+
+console.log(x_values)
+console.log(y_trace1)
+
+var trace1 = {
+  x: x_values,
+  y: y_trace1,
+  name: "Training Scores",
+  type: "bar",
+  marker: {
+      color: '#91dada'
+    }
+}
+var trace2 = {
+  x: x_values,
+  y: y_trace2,
+  name: "Testing Scores",
+  type: "bar",
+  marker: {
+      color: '#337d7d'
+    }
+}
+
+var barData = [trace1, trace2]
+
+var barLayout = {
+      // barmode:"stack", 
+      title: { text: "Scoring models for " + d3.select("#selectGender").property("value") + " and " + d3.select("#selectAge").property("value") ,
+              font: {
+                  family: 'Oswald',
+                  size: 24
+                  }
+              },
+      legend: {
+          orientation: 'h',
+          x: 0.25, 
+          y: -0.15
+              },
+      // paper_bgcolor: "#0e173d",
+              font: {
+                  family: 'Oswald',
+                  size: 16
+                  },
+      yaxis: {fixedrange: true},
+      xaxis: {fixedrange: true}
+      
+
+  };
+
+  Plotly.newPlot("bar_model", barData, barLayout);
+  console.log("Plot done")
+}

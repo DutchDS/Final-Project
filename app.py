@@ -60,8 +60,8 @@ def model(model, selFeatures):
     result=""
     if model == 'model1':
         result = model1(selFeatures)
-    elif model == 'model2':
-        result = model2(selFeatures)
+    # elif model == 'model2':
+    #     result = model2(selFeatures)
     elif model == 'model3':
         result = model3(selFeatures)
     else:
@@ -174,6 +174,33 @@ def counties_list():
         results_dict["state"] = state
         results_dict["county"] = county
         results_dict["date"] = date
+        all_results.append(results_dict)
+
+    return jsonify(all_results)
+
+
+@app.route("/api/v1.0/bar_model/<selFeatures>")
+def bar_model(selFeatures):
+    
+    features = str(selFeatures[:8])
+    print(features)
+
+    result_set = []
+    
+    # query_str = open('static/sql/USA_bar.sql')
+    query_text = "select model, train_score, test_score from model_eval where features = '" + str(features) + \
+        "' order by test_score desc"
+
+    print(query_text)
+
+    result_set = engine.execute(query_text)
+    
+    all_results = []
+    for model, train_score, test_score in result_set:
+        results_dict = {}
+        results_dict["model"] = model
+        results_dict["train_score"] = train_score
+        results_dict["test_score"] = test_score
         all_results.append(results_dict)
 
     return jsonify(all_results)
