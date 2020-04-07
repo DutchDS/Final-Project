@@ -47,7 +47,7 @@ def risk():
 @app.route("/viz")
 def viz(): 
   
-    return render_template("Covid_Home.html")
+    return render_template("Covid_Viz.html")
 
 @app.route("/charts")
 def charts(): 
