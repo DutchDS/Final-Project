@@ -22,10 +22,10 @@ var listGender = [];
 var listAge = [];
 
 // listModel = ['Classification','Deep Learning','Random Forest','K-Nearest Neighbor']
-listModel = ['Classification','Random Forest','K-Nearest Neighbor']
+listModel = ['Decision Tree','Random Forest','K-Nearest Neighbor']
 
 listGender = ['Male','Female']
-listAge = ['< 39 years old','40 - 49 years old','50 - 59 years old','60 - 69 years old','70 - 79 years old','> 80 years old']
+listAge = ['<= 39 years old','40 - 49 years old','50 - 59 years old','60 - 69 years old','70 - 79 years old','=> 80 years old']
 
 console.log(listModel);
 console.log(listGender);
@@ -104,7 +104,7 @@ function preArray() {
     console.log("Throat Ache: ", inputThroatAche);
     console.log("Soreness: ",inputSoreness);
 
-    if (inputModel=='Classification') {chosenModel='model1';}
+    if (inputModel=='Decision Tree') {chosenModel='model1';}
       // else if (inputModel=='Deep Learning') {chosenModel='model2'}
       else if (inputModel=='Random Forest') {chosenModel='model3'}
       else {chosenModel='model4'};
@@ -112,12 +112,12 @@ function preArray() {
     if (inputGender=='Male') {s1="1"} else {s1 = "0";};
     if (inputGender=='Female') {s2="1"} else {s2 = "0";};
 
-    if (inputAge=='< 39 years old') {s3="1"} else {s3 = "0";};
+    if (inputAge=='<= 39 years old') {s3="1"} else {s3 = "0";};
     if (inputAge=='40 - 49 years old') {s4="1"} else {s4 = "0";};
     if (inputAge=='50 - 59 years old') {s5="1"} else {s5 = "0";};
     if (inputAge=='60 - 69 years old') {s6="1"} else {s6 = "0";};
     if (inputAge=='70 - 79 years old') {s7="1"} else {s7 = "0";};
-    if (inputAge=='> 80 years old') {s8="1"} else {s8 = "0";};
+    if (inputAge=='=> 80 years old') {s8="1"} else {s8 = "0";};
 
     if (inputPrecondition==0) {s9 = "1";} else {s9 = "0";};
     if (inputFromHotspot==0) {s10 = "1";} else {s10 = "0";};
