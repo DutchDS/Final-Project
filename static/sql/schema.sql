@@ -64,7 +64,7 @@ DROP VIEW IF EXISTS covid_by_county_v CASCADE;
 DROP VIEW IF EXISTS covid_by_state_v CASCADE;
 DROP VIEW IF EXISTS covid_by_country_v CASCADE;
 
-DROP TABLE IF EXISTS CASCADE;
+DROP TABLE IF EXISTS covid_data_states CASCADE;
 
 CREATE TABLE covid_data_states
 (

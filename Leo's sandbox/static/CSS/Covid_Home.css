@@ -85,6 +85,19 @@ body {
   transform: translateY(30em);
 }
 
+/* #bar-race {
+  transform: translateY(40em);
+} */
+#bar-race {
+  background-color: #30303d;
+  width: 100%;
+  height: 800px;
+}
+
+/* #bar-race path {
+  fill: #337d7d !important;
+} */
+
 /*
 ==================================
 3. Hamburger Nav 
@@ -304,5 +317,9 @@ nav {
 */
 
 #sticky-footer {
-    transform: translateY(42em);
+    transform: translateY(50em);
+}
+
+#sticky-footer p {
+  font-size: 10px;
 }

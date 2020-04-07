@@ -64,21 +64,29 @@ DROP VIEW IF EXISTS covid_by_county_v CASCADE;
 DROP VIEW IF EXISTS covid_by_state_v CASCADE;
 DROP VIEW IF EXISTS covid_by_country_v CASCADE;
 
-DROP TABLE IF EXISTS covid_data_states;
+DROP TABLE IF EXISTS CASCADE;
 
 CREATE TABLE covid_data_states
 (
 	id serial not null,	
     date date,
     state text COLLATE pg_catalog."default",
-    positive bigint,
+    positive bigint, 
     negative bigint,
     pending bigint,
+	hospitalized_curr bigint,
+	hospitalized_cum bigint,
+	"in_ICU_curr" bigint,
+	"in_ICU_cum" bigint,
+	on_vent_curr bigint,
+	on_vent_cum bigint,
+	recovered bigint,
     hospitalized bigint,
     death bigint,
     dontuse_total bigint,
     check_date date,
     total_tests bigint,
+	pos_neg bigint,
     fips bigint,
     death_inc bigint,
     hospital_inc bigint,
@@ -395,12 +403,21 @@ DROP VIEW IF EXISTS covid_and_census_by_state_v;
 create view covid_and_census_by_state_v as (
 select 
 	date, s.state_name, s.state, s.emergency_date, s.first_case_date, 
-	positive, negative, pending, hospitalized, death, (positive + hospitalized + death) as total_cases, total_tests, death_inc, hospital_inc, neg_inc, pos_inc, tot_tests_inc, 
+	max(positive) as positive, max(negative) as negative, max(pending) as pending, max(hospitalized) as hospitalize, 
+	max(death) as death, max((positive + hospitalized + death)) as total_cases, max(total_tests) as total_tests,
+	max(hospitalized_curr) as hospitalized_curr , max(hospitalized_cum) as hospitalized_cum, max("in_ICU_curr") as in_ICU_curr, max("in_ICU_cum") as in_ICU_cum,
+	max(on_vent_curr) as on_vent_curr, max(on_vent_cum) as on_vent_cum, max(recovered) as recovered,
+	max(death_inc) as death_inc, max(hospital_inc) as hospital_inc, max(neg_inc) as neg_inc, max(pos_inc) as pos_inc, 
+	max(tot_tests_inc) as tot_tests_inc, 
 	s.latitude, s.longitude,
 	cd.total_pop, cd.men, cd.women, cd.white, cd.black, cd.hispanic, cd.native, cd.pacific
 from covid_data_states c 
 	join states_data s on c.state = s.state
 	left join census_data_by_state_v cd on s.state_name = cd.state 
+
+group by 	date, s.state_name, s.state, s.emergency_date, s.first_case_date, 	s.latitude, s.longitude,
+	cd.total_pop, cd.men, cd.women, cd.white, cd.black, cd.hispanic, cd.native, cd.pacific
+
 );
 -- *********************************************************************************************
 DROP VIEW IF EXISTS covid_and_census_by_county_v;
@@ -492,4 +509,13 @@ CREATE VIEW case_study_all_v as (
 SELECT 'closed' as status, * FROM case_study_1_v 
 UNION
 SELECT 'open', * FROM case_study_2_v 
+);
+DROP VIEW IF EXISTS covid_new_cases_death_by_state;
+
+create view covid_new_cases_death_by_state as (
+select date,s.state_name,pos_inc as new_cases,hospital_inc as new_hospitalizations,death_inc as new_deaths 
+    from covid_data_states c 
+    join states_data s 
+    on c.state = s.state 
+    order by c.state, date
 );
