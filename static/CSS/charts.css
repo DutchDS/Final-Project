@@ -4,15 +4,13 @@ Table of Contents:
 
 1. Universal Element
 
-2. Container
+2. Enter Button
 
 3. Hamburger Nav
 
 4. Fade-In Text
 
 5. Media Query
-
-6. Footer
 ==================================
 */
 
@@ -21,89 +19,54 @@ Table of Contents:
 1. Universal Element 
 ==================================
 */
-
-
 * {
-    font-family: 'Oswald', sans-serif !important;
+    font-family: 'Oswald', sans-serif;
     font-weight: lighter;
     margin: 0;
     padding: 0;
 }
 
+
 a {
     text-decoration: none !important;
     color: inherit !important;
 }
-
-body {
-    margin-bottom: 100px;
-}
-
 /*
 ==================================
-2. Container
+2. Enter Button
 ==================================
 */
 
-#welcome {
-    transform: translateY(18em);
-    position: relative;
-    overflow: hidden !important;
-    transition: 0.9s !important;
-}
-
-#welcome h1{
-    font-size: 60px;
-    color: #337d7d;
+.landing-text h1 {
+    font-size: 50px !important;
     font-weight: lighter !important;
-    transition: 0.6s;
-}
-
-#welcome h1:hover {
-    font-size: 70px;
-    transition: 0.5s;
-}
-
-
-#para {
-    transform: translateY(30em);
+    color: #337D7D !important;
+    transition: 0.6s !important;
     overflow: hidden;
-    transition: 0.9s;
 }
 
-#para #about h3{
-    color: #337d7d;
-    font-weight: lighter !important;
+.landing-text h1:hover {
+    font-size: 60px !important;
 }
 
-#tableau-box #tab-test h3 {
-  color: #337d7d;
-  font-weight: lighter !important;
+.landing-text {
+    transform: translateY(19em);
 }
 
-#tableau-box {
+.landing-text {
+    position: relative;
+    text-align: center;
+}
+
+.new-container {
   transform: translateY(30em);
 }
-
-/* #bar-race {
-  transform: translateY(40em);
-} */
-/* #bar-race {
-  background-color: #30303d;
-  width: 100%;
-  height: 800px;
-} */
-
-/* #bar-race path {
-  fill: #337d7d !important;
-} */
 
 /*
 ==================================
 3. Hamburger Nav 
 ==================================
 */
-
 nav {
     z-index: 3;
 }
@@ -112,7 +75,7 @@ nav {
     position: fixed;
     width: 300px;
     height: 100% !important;
-    background: #337d7d !important;
+    background: #337D7D !important;
     left: -400px;
     transition: 0.6s;
 }
@@ -142,6 +105,10 @@ nav {
     left: 450px;
 }
 
+#hamburger .menu .line:hover {
+    cursor: pointer;
+}
+
 #hamburger .menu:hover {
     cursor: pointer;
 }
@@ -150,20 +117,26 @@ nav {
 .menu .line {
     width: 50px;
     height: 4px;
-    background: #337d7d;
+    background: #337D7D;
     display: block;
     margin-top: 6px;
-    transition: 0.9s;
+    transition: 0.6s !important;
     position: relative;
-    overflow: hidden;
+    overflow: hidden !important;
 }
 
 .menu .line:hover {
     width: 60px;
-    transition: 0.3s;
+    transition: 0.4s;
 }
 
+#sticky-footer {
+  transform: translateY(42em);
+}
 
+#sticky-footer p {
+font-size: 10px;
+}
 
 /*
 ==================================
@@ -171,60 +144,7 @@ nav {
 ==================================
 */
 
-.container {
-    animation: fadeIn ease 5s;
-    -webkit-animation: fadeIn ease 8s;
-    -moz-animation: fadeIn ease 8s;
-    -o-animation: fadeIn ease 8s;
-    -ms-animation: fadeIn ease 8s;
-  }
-
-  @keyframes fadeIn {
-    0% {
-      opacity:0;
-    }
-    100% {
-      opacity:1;
-    }
-  }
-  
-  @-moz-keyframes fadeIn {
-    0% {
-      opacity:0;
-    }
-    100% {
-      opacity:1;
-    }
-  }
-  
-  @-webkit-keyframes fadeIn {
-    0% {
-      opacity:0;
-    }
-    100% {
-      opacity:1;
-    }
-  }
-  
-  @-o-keyframes fadeIn {
-    0% {
-      opacity:0;
-    }
-    100% {
-      opacity:1;
-    }
-  }
-  
-  @-ms-keyframes fadeIn {
-    0% {
-      opacity:0;
-    }
-    100% {
-      opacity:1;
-  }
-}
-
-#hamburger {
+.container, #hamburger {
     animation: fadeIn ease 5s;
     -webkit-animation: fadeIn ease 8s;
     -moz-animation: fadeIn ease 8s;
@@ -283,10 +203,11 @@ nav {
 ==================================
 */
 
-@media (max-width: 475px) {
-    .container h1 {
+@media (max-width: 375px) {
+    /* .container h1 {
+        margin-top: 20%;
         font-size: 30px;
-    }
+    } */
     
     .container h2 {
         font-size: 15px;
@@ -307,19 +228,5 @@ nav {
         top: 20px;
         left: 230px;
     }
-
-}
-
-/*
-==================================
-6. Footer
-==================================
-*/
-
-#sticky-footer {
-    transform: translateY(45em);
-}
-
-#sticky-footer p {
-  font-size: 10px;
+    
 }
