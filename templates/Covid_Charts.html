@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width initial-scale=1.0">
         <!--CSS file-->
-        <link rel="stylesheet" type="text/css" href="static/CSS/Land.css">
+        <link rel="stylesheet" type="text/css" href="static/CSS/charts.css">
 
         <!--APIs for fonts used on site-->
         <link href="https://fonts.googleapis.com/css?family=Oswald:200,300,400,500,600,700&display=swap" rel="stylesheet">
@@ -43,7 +43,6 @@
                 <li><a href="/risk">Risk Calculator</a></li>
                 <li><a href="/viz">Visualization</a></li>
                 <li><a href="/charts">Charts</a></li>
-                <li><a href="#">What You Can Do</a></li>
                 <li><a href="/team">About</a></li>
                 <li><a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">CDC Site</a></li>
             </ul>
@@ -55,86 +54,27 @@
                 <h1 class="text-center">Covid-19 Charts</h1>
             </div>
             <div>
-            <div class="new-container">
-<!-- ########################### WORLD CHART ###################################### -->
-                <div class="row">
-                    <div class='col-lg-4 col-6'>
-                        <div class="card">
-                        <div class="card-body">
-                            <select class="form-control" id="selectCountry" name="select-country-from-list">
-                            </select>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class= "col-lg-12 col-sm-12">
-                    <!-- ############################################ -->
-                    <!-- ########## INSERT BAR CHART ################ -->
-                    <!-- ############################################ -->
-                        <div class="card" style="width: 100%">
-                        <div class="card-body">
-                            <div id="bar_country"></div>
-                            <div class="col-lg-12 col-sm-12" style="text-align: right">
-                            <h10 style="text-align: right">Datasource <a href="https://github.com/COVID19Tracking/covid-tracking-data/tree/master/data">github.com/COVID19Tracking/covid-tracking-data</a></h10>
-                            </div>  
-                        </div>
-                        </div>
-                        <br>
-                    </div>
-                </div>
-
-<!-- ########################### STATE CHART ###################################### -->
-                <div class="row">
-                    <div class='col-lg-4 col-6'>
-                        <div class="card">
-                        <div class="card-body">
-                            <select class="form-control" id="selectShape" name="select-shape-from-list">
-                            </select>
-                        </div>
+                <div class="new-container">
+    <!-- ########################### WORLD CHART ###################################### -->
+                    <div class="row">
+                        <div class='col-lg-4 col-6'>
+                            <div class="card">
+                            <div class="card-body">
+                                <select class="form-control" id="selectCountry" name="select-country-from-list">
+                                </select>
+                            </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class= "col-lg-12 col-sm-12">
-                    <!-- ############################################ -->
-                    <!-- ########## INSERT BAR CHART ################ -->
-                    <!-- ############################################ -->
-                        <div class="card" style="width: 100%">
-                        <div class="card-body">
-                            <div id="bar"></div>
-                            <div class="col-lg-12 col-sm-12" style="text-align: right">
-                            <h10 style="text-align: right">Datasource <a href="https://github.com/COVID19Tracking/covid-tracking-data/tree/master/data">github.com/COVID19Tracking/covid-tracking-data</a></h10>
-                            </div>  
-                        </div>
-                        </div>
-                        <br>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class= "col-lg-6 col-sm-12">
-                    <!-- ############################################ -->
-                    <!-- ########## INSERT SECOND BAR CHART ################ -->
-                    <!-- ############################################ -->
-                        <div class="card" style="width: 100%">
-                        <div class="card-body">
-                            <div id="bar2"></div>
-                            <div class="col-lg-12 col-sm-12" style="text-align: right">
-                            <h10 style="text-align: right">Datasource <a href="https://github.com/COVID19Tracking/covid-tracking-data/tree/master/data">github.com/COVID19Tracking/covid-tracking-data</a></h10>
-                            </div>  
-                        </div>
-                        </div>
-                        <br>
-                    </div>
-                    <div class= "col-lg-6 col-sm-12">
+                    <br>
+                    <div class="row">
+                        <div class= "col-lg-12 col-sm-12">
                         <!-- ############################################ -->
-                        <!-- ########## INSERT THIRD BAR CHART ################ -->
+                        <!-- ########## INSERT BAR CHART ################ -->
                         <!-- ############################################ -->
                             <div class="card" style="width: 100%">
                             <div class="card-body">
-                                <div id="bar3"></div>
+                                <div id="bar_country"></div>
                                 <div class="col-lg-12 col-sm-12" style="text-align: right">
                                 <h10 style="text-align: right">Datasource <a href="https://github.com/COVID19Tracking/covid-tracking-data/tree/master/data">github.com/COVID19Tracking/covid-tracking-data</a></h10>
                                 </div>  
@@ -142,45 +82,112 @@
                             </div>
                             <br>
                         </div>
-                </div>
+                    </div>
 
-<!-- ########################### COUNTY CHART ###################################### -->
-                <div class="row">
- 
-                    <div class='col-lg-4 col-4'>
-                        <div class="card">
-                        <div class="card-body">
-                            <select class="form-control" id="selectCounty" name="select-country-from-list">
-                            </select>
-                        </div>
+    <!-- ########################### STATE CHART ###################################### -->
+                    <div class="row">
+                        <div class='col-lg-4 col-6'>
+                            <div class="card">
+                            <div class="card-body">
+                                <select class="form-control" id="selectShape" name="select-shape-from-list">
+                                </select>
+                            </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class= "col-lg-12 col-sm-12">
-                    <!-- ############################################ -->
-                    <!-- ########## INSERT BAR CHART counties ############### -->
-                    <!-- ############################################ -->
-                        <div class="card" style="width: 100%">
-                        <div class="card-body">
-                            <div id="bar_county"></div>
-                            <div class="col-lg-12 col-sm-12" style="text-align: right">
-                            <h10 style="text-align: right">Datasource <a href="https://github.com/COVID19Tracking/covid-tracking-data/tree/master/data">github.com/COVID19Tracking/covid-tracking-data</a></h10>
-                            </div>  
+                    <br>
+                    <div class="row">
+                        <div class= "col-lg-12 col-sm-12">
+                        <!-- ############################################ -->
+                        <!-- ########## INSERT BAR CHART ################ -->
+                        <!-- ############################################ -->
+                            <div class="card" style="width: 100%">
+                            <div class="card-body">
+                                <div id="bar"></div>
+                                <div class="col-lg-12 col-sm-12" style="text-align: right">
+                                <h10 style="text-align: right">Datasource <a href="https://github.com/COVID19Tracking/covid-tracking-data/tree/master/data">github.com/COVID19Tracking/covid-tracking-data</a></h10>
+                                </div>  
+                            </div>
+                            </div>
+                            <br>
                         </div>
-                        </div>
-                        <br>
                     </div>
+                    <div class="row">
+                        <div class= "col-lg-6 col-sm-12">
+                        <!-- ############################################ -->
+                        <!-- ########## INSERT SECOND BAR CHART ################ -->
+                        <!-- ############################################ -->
+                            <div class="card" style="width: 100%">
+                            <div class="card-body">
+                                <div id="bar2"></div>
+                                <div class="col-lg-12 col-sm-12" style="text-align: right">
+                                <h10 style="text-align: right">Datasource <a href="https://github.com/COVID19Tracking/covid-tracking-data/tree/master/data">github.com/COVID19Tracking/covid-tracking-data</a></h10>
+                                </div>  
+                            </div>
+                            </div>
+                            <br>
+                        </div>
+                        <div class= "col-lg-6 col-sm-12">
+                            <!-- ############################################ -->
+                            <!-- ########## INSERT THIRD BAR CHART ################ -->
+                            <!-- ############################################ -->
+                                <div class="card" style="width: 100%">
+                                <div class="card-body">
+                                    <div id="bar3"></div>
+                                    <div class="col-lg-12 col-sm-12" style="text-align: right">
+                                    <h10 style="text-align: right">Datasource <a href="https://github.com/COVID19Tracking/covid-tracking-data/tree/master/data">github.com/COVID19Tracking/covid-tracking-data</a></h10>
+                                    </div>  
+                                </div>
+                                </div>
+                                <br>
+                            </div>
+                    </div>
+
+    <!-- ########################### COUNTY CHART ###################################### -->
+                    <div class="row">
+    
+                        <div class='col-lg-4 col-4'>
+                            <div class="card">
+                            <div class="card-body">
+                                <select class="form-control" id="selectCounty" name="select-country-from-list">
+                                </select>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class= "col-lg-12 col-sm-12">
+                        <!-- ############################################ -->
+                        <!-- ########## INSERT BAR CHART counties ############### -->
+                        <!-- ############################################ -->
+                            <div class="card" style="width: 100%">
+                            <div class="card-body">
+                                <div id="bar_county"></div>
+                                <div class="col-lg-12 col-sm-12" style="text-align: right">
+                                <h10 style="text-align: right">Datasource <a href="https://github.com/COVID19Tracking/covid-tracking-data/tree/master/data">github.com/COVID19Tracking/covid-tracking-data</a></h10>
+                                </div>  
+                            </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+
+
+
+
                 </div>
-
-
-
-
-            </div>
             </div>
         </div>
     </div>
+    <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+        <div class="container text-center">
+          <small>Copyright &copy; CoRiT</small>
+          <p class="col-lg-12 col-sm-12">The contents of the Risk Calculator, such as text, graphics, images, and other materials created by the CoRiT Team or obtained from the CoRiT’s licensors, and other materials contained on the CoRiT Site (collectively “Content”) are for informational purposes only. The Content is not intended to be a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition. Never disregard professional medical advice or delay in seeking it because of something you have read on the CoRiT site!
+
+            If you think you may have a medical emergency, call your doctor or 911 immediately. CoRiT does not recommend or endorse any specific tests, physicians, products, procedures, opinions, or other information that may mentioned on the Site. Reliance on any information provided by CoRiT, the CoRiT team, others appearing on the site at the invitation of CoRiT, or other visitors to the site is solely at your own risk.</p>
+        </div>
+    </footer>
 
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
