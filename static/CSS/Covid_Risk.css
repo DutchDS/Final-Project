@@ -161,6 +161,7 @@ body {
   display: none;
   width: 90%;
   left: 50px;
+  transform: translateY(-225%);
 }
 
 .flag-image, .flag-body {
@@ -248,6 +249,11 @@ body {
   z-index: 3;
   text-align: center;
   transform: translateY(-55%);
+}
+
+#bar_model {
+  transform: translateX(-25%);
+  width: 120%;
 }
 
 /*
@@ -435,7 +441,7 @@ nav {
 ==================================
 */
 
-@media (max-width: 450px) {
+@media (max-width: 800px) {
     .container h1 {
         font-size: 30px;
     }
@@ -476,6 +482,12 @@ nav {
       font-size: 15px;
       text-align: center;
       transform: translateY(-30%);
+    }
+
+    #bar_model {
+      height: 300px;
+      transform: translateX(0%);
+      width: 90%;
     }
 
 }

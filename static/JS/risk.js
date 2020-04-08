@@ -219,13 +219,20 @@ get_submit.on("click", function() {
       
       })
   });
+
 //opens the alert box
   $(document).ready(function(){
+    $("#bar_model").html("");
+
     $("#submitAll").click(function() {
       $("#alert")
       .css("display","table")
       .animate({opacity : 1}, 250);
-      // .animate({opacity: 1}, 250)
+    });
+    
+    $("#submitAll").click(function() {
+      $("#bar_model")
+      .css("height", "500px");
     });
   });
 
