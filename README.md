@@ -1,7 +1,7 @@
 # Project-3 COVID-19 Risk Calculator
 By Leo Huang, Joseph Yi, Michael Becker and Aukje Rijpkema 4/8/2020
 
-##About the Risk Calculator
+## About the Risk Calculator
 
 The Covid-19 virus for the last few months has caused many people around the world to change their normal habits. It is teaching us to be more observant on the activities we do and the people we meet with. For those who are feeling ill, but do not know if they should go see a doctor may grow in anxiety. 
 
@@ -15,7 +15,7 @@ The Risk Calculator uses various machine-learning models to help predict if some
 * K-nearest neighbors model. 
 The models are not 100% accurate, and are still in beta due to the ever changing data incorporated with Covid-19. This is just here to show information.
 
-##Architecture
+## Architecture
 
 PostgreSQL Database	- 6 datasources – 10 views
 Python ETL		- full + delta loads
@@ -25,7 +25,7 @@ HTML/CSS/JS 		- frontend web-application
 Tableau			- integrated in web-application
 Heroku			- application deployment
 
-##Functionality
+## Functionality
 
 The application is comprised of 6 pages:
 
@@ -36,18 +36,17 @@ Charts Page		– Statistics by Country, State and County
 About Page		– Our Roles and Profiles
 CDC-site 		– More information
 
-
-##Home Page
+## Home Page
 
 The homepage starts out with a description and disclaimer about the applications. 
 An animated so-called race-chart shows confirmed cases per state over time.
 
-##Risk Calculator
+## Risk Calculator
 
 A Python script was created to retrieve, transform and load data from 2 datasets on actual COVID-19 cases that came out by the end of January 2019. Eventhough the dataset wasn't filled out consistently as it appears to have been created by a multitude of sources with patients from around the globe, it turned out to be a good starting point for Machine Learning in order to predict the outcome when given an x-number of symptoms and conditions.
 
 datasources:
- ~1000 closed cases (mostly hospitalizations + death)
+ ~ 1000 closed cases (mostly hospitalizations + death)
  ~ 14000 open cases (tested positive but never reported back)
 
 Some more cleanup was done using SQL in a Postgres database.
@@ -67,16 +66,16 @@ After filling out the form:
 
 ... as well a an evaluation based on the submitted gender and age about the performance of the different models:
 
-![model_eval.png](static/images/model_eval.png)
+![model_score.png](static/images/model_score.png)
 
 
-##Visualization Page
+## Visualization Page
 
 This page used an embedded link to Tableau and plots on a USA map the number of confirmed vs number of deceased cases. On the SQL-server level, COVID-case data is merged with US Census data so that a 'percentage infected' and 'percentage deceased' per state can be calculated within Tableau. To the right a 'play' button allows for animated growth over time.
 
 ![map_2.png](static/images/map.png)
 
-##Chart Page
+## Chart Page
 
 The chart page shows cases over time by:
 - Country
@@ -89,7 +88,7 @@ The chart page shows cases over time by:
 
 ![delta_curve.png](static/images/delta_curve.png)
 
-##About Us
+## About Us
 
 Lastly, links to our LinkedIn pages can be found on the About page
 
