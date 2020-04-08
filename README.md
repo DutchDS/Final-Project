@@ -15,28 +15,29 @@ The Risk Calculator uses various machine-learning models to help predict if some
 * decision-tree model 
 * random forest model
 * K-nearest neighbors model. 
+
 The models are not 100% accurate, and are still in beta due to the ever changing data incorporated with Covid-19. This is just here to show information.
 
 ## Architecture
 
-PostgreSQL Database	- 6 datasources – 10 views
-Python ETL		- full + delta loads
-Python ML		- 4 models
-FLASK API		- 8 routes – 4 API endpoints
-HTML/CSS/JS 		- frontend web-application
-Tableau			- integrated in web-application
-Heroku			- application deployment
+* PostgreSQL Database	- 6 datasources – 10 views
+* Python ETL		- full + delta loads
+* Python ML		- 4 models
+* FLASK API		- 8 routes – 4 API endpoints
+* HTML/CSS/JS 		- frontend web-application
+* Tableau			- integrated in web-application
+* Heroku			- application deployment
 
 ## Functionality
 
 The application is comprised of 6 pages:
 
-Home Page 		– Race Chart by State
-Risk Calculator Page	– Find out how much you are at risk
-Visualization Page	– Geographic display of spread
-Charts Page		– Statistics by Country, State and County
-About Page		– Our Roles and Profiles
-CDC-site 		– More information
+* Home Page 		– Race Chart by State
+* Risk Calculator Page	– Find out how much you are at risk
+* Visualization Page	– Geographic display of spread
+* Charts Page		– Statistics by Country, State and County
+* About Page		– Our Roles and Profiles
+* CDC-site 		– More information
 
 ## Home Page
 
@@ -48,15 +49,16 @@ An animated so-called race-chart shows confirmed cases per state over time.
 A Python script was created to retrieve, transform and load data from 2 datasets on actual COVID-19 cases that came out by the end of January 2019. Eventhough the dataset wasn't filled out consistently as it appears to have been created by a multitude of sources with patients from around the globe, it turned out to be a good starting point for Machine Learning in order to predict the outcome when given an x-number of symptoms and conditions.
 
 datasources:
- ~ 1000 closed cases (mostly hospitalizations + death)
- ~ 14000 open cases (tested positive but never reported back)
+
+* ~ 1000 closed cases (mostly hospitalizations + death)
+* ~ 14000 open cases (tested positive but never reported back)
 
 Some more cleanup was done using SQL in a Postgres database.
 After applying 4 models to predict 3 possible outcomes ('get well at home', 'visit the hospita','death'), the following 3 turned out to be most useful:
 
-Decision Tree
-Random Forest
-K-Nearest Neighbor
+* Decision Tree
+* Random Forest
+* K-Nearest Neighbor
 
 After filling out the form:
 
