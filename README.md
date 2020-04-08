@@ -3,7 +3,7 @@ By Leo Huang, Joseph Yi, Michael Becker and Aukje Rijpkema 4/8/2020
 
 ## About the Risk Calculator
 
-![here](https://corona-risk.herokuapp.com/) to go to https://corona-risk.herokuapp.com
+To go to the Heroku app: https://corona-risk.herokuapp.com
 
 The Covid-19 virus for the last few months has caused many people around the world to change their normal habits. It is teaching us to be more observant on the activities we do and the people we meet with. For those who are feeling ill, but do not know if they should go see a doctor may grow in anxiety. 
 
