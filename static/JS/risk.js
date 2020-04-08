@@ -265,9 +265,9 @@ function create_model_chart(bar_data) {
   bar_test_score = []
 
   for (var i in bar_data) {
-      bar_model.push(bar_data[i].bar_model)
-      bar_train_score.push(bar_data[i].bar_train_score)
-      bar_test_score.push(bar_data[i].bar_test_score)
+      bar_model.push(bar_data[i].model)
+      bar_train_score.push(bar_data[i].train_score)
+      bar_test_score.push(bar_data[i].test_score)
   }
 
   x_values = bar_model
