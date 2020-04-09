@@ -37,10 +37,10 @@ function get_data(state) {d3.json(url).then(function(response) {
 
     console.log(state)
     
-    if (state == "All")
-        chart_data = response
-    else
-        chart_data =  response.filter(response => {return response.state == state});
+    // if (state == "All")
+    //     chart_data = response
+    // else
+    chart_data =  response.filter(response => {return response.state == state});
 
     console.log(shortShapes)        
     loadDropDowns("#selectShape",shortShapes,"Select State");
@@ -64,10 +64,10 @@ function get_data_country(country) {d3.json(url_countries).then(function(respons
 
     console.log(country)
     
-    if (country == "All")
-        chart_data = response
-    else
-        chart_data =  response.filter(response => {return response.country == country});
+    // if (country == "All")
+    //     chart_data = response
+    // else
+    chart_data =  response.filter(response => {return response.country == country});
 
     console.log(shortShapes)        
     loadDropDowns("#selectCountry",shortShapes,"Select Country");
