@@ -99,7 +99,8 @@ var country = 'All'
 var county = 'All'
 
 get_data(state);
-get_data_country(country)
+get_data_country(country);
+d3.select("#selectCounty").append("option").text("Select County");
 
 console.log("went through the bar charts script")
 
@@ -218,7 +219,7 @@ var barLayout = {
         legend: {
             orientation: 'h',
             x: 0.25, 
-            y: 1.15
+            y: -0.15
                 },
         // paper_bgcolor: "#0e173d",
                 font: {
@@ -241,7 +242,7 @@ var barLayout2 = {
     legend: {
         orientation: 'h',
         x: 0.25, 
-        y: 1.15
+        y: -0.15
             },
     // paper_bgcolor: "#0e173d",
             font: {
@@ -264,7 +265,7 @@ var barLayout3 = {
     legend: {
         orientation: 'h',
         x: 0.25, 
-        y: 1.15
+        y: -0.15
             },
             font: {
                 family: 'Oswald',
@@ -345,8 +346,8 @@ var barLayout4 = {
                 },
         legend: {
             orientation: 'h',
-            x: 0.25, 
-            y: 1.15
+            x: 0.35, 
+            y: -0.15
                 },
         // paper_bgcolor: "#0e173d",
                 font: {
@@ -428,7 +429,7 @@ var barLayout5 = {
         legend: {
             orientation: 'h',
             x: 0.25, 
-            y: 1.15
+            y: -0.15
                 },
         // paper_bgcolor: "#0e173d",
                 font: {

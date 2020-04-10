@@ -34,6 +34,18 @@ UPDATE covid_data_3
 SET country_region = 'Korea, South'
 WHERE country_region = 'Republic of Korea';
 
+update covid_data_1
+set country_region = 'China'
+where country_region = 'Mainland China'
+update covid_data_2
+set country_region = 'China'
+where country_region = 'Mainland China'
+update covid_data_3
+set country_region = 'China'
+where country_region = 'Mainland China'
+
+
+
 UPDATE individual_case_data_closed
 SET summary = substring(summary, 0, position('not hospitalized' in lower(summary))) || 'not-in-hospital' || 
 substring(summary, position('not hospitalized' in lower(summary))+16)
