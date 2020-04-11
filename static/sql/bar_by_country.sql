@@ -1,7 +1,7 @@
 select
 short_date as date,
 country_region as country,
-confirmed as positive,
+(confirmed-recovered-deaths) as positive,
 recovered,
 deaths as deceased
 from covid_by_country_v 
@@ -15,7 +15,7 @@ select
 
 short_date as date,
 'All' as country,
-cast(sum(confirmed) as integer) as positive,
+cast(sum(confirmed-recovered-deaths) as integer) as positive,
 cast(sum(recovered) as integer) as recovered,
 cast(sum(deaths) as integer) as deceased
 from covid_by_country_v 

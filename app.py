@@ -11,7 +11,7 @@ from sqlalchemy import create_engine
 from flask_sqlalchemy import SQLAlchemy
 import decimal
 import flask.json
-from run_models import model1, model2, model3, model4
+from run_models import model1, model3, model4
 # import load_db
 
 app = Flask(__name__)
@@ -70,10 +70,37 @@ def model(model, selFeatures):
     # print(str(result[0]))
     # return jsonify(str(result[0]))
 
+    pred_1 = model1(selFeatures)
+    pred_3 = model3(selFeatures)
+    pred_4 = model4(selFeatures)
+
+    gen_age_features = str(selFeatures[:8])
+
+    query_text = "select model, test_score from model_eval where features = '" + str(gen_age_features) + \
+        "' and test_score = (select max(test_score) from model_eval where features = '" + str(gen_age_features) + "')"
+    
+    best_model_result = engine.execute(query_text)
+    print(best_model_result)
+
+    for model, test_score in best_model_result:
+        results_dict = {}
+        results_dict["model"] = model
+        results_dict["test_score"] = test_score
+
+    result_long = {}
+    print("Dictionary", results_dict)
+    if (results_dict['model'] == 'Decision Tree'):
+        result_long = {"prediction" : str(pred_1[0]), "model" : results_dict['model'], "test_score" : results_dict['test_score']}
+    elif (results_dict['model']  == 'Random Forest'):
+        result_long = {"prediction" : str(pred_3[0]), "model" : results_dict['model'], "test_score" : results_dict['test_score']}
+    else: 
+        result_long = {"prediction" : str(pred_4[0]), "model" : results_dict['model'], "test_score" : results_dict['test_score']}
+    
     print(result)
+    print(result_long)
     x = (str(result[0]))
     print(x)
-    return x
+    return result_long
 
 
 @app.route("/api/v1.0/bar_states")

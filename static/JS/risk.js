@@ -57,8 +57,9 @@ function preArray() {
     let chosenModel = ""
 
     // Get all inputElement values - NEEDS TO BE COMPLETED FOR ALL FEATURES
-    let inputModel = d3.select("#selectModel").property("value");
+    // let inputModel = d3.select("#selectModel").property("value");
 
+    let inputModel = 'model3'
     let inputGender = d3.select("#selectGender").property("value");
     let inputAge = d3.select("#selectAge").property("value");
     
@@ -184,26 +185,32 @@ get_submit.on("click", function() {
       
       console.log(response)
 
-      if (response == 1) {
+      if (response.prediction == 1) {
         // alert("Based on statistics, things aren't looking so well. Please see a doctor as soon as possible!" );
         $(document).ready(function(){
           $("#alert-message").html("");
           $("#alert-message").append("Based on statistics, things aren't looking so well. Please see a doctor as soon as possible!");
+          $("#alert-message").append("Chosen Model: " + response.model);
+          $("#alert-message").append("Test Score: " + response.test_score);
         });
       } 
-      else if (response == 2) {
+      else if (response.prediction  == 2) {
         // alert("Your situation is severe, you will most likely have to go to the hospital!")
         $(document).ready(function(){
           $("#alert-message").html("");
           $("#alert-message").append("Your situation is severe, you will most likely have to go to the hospital!");
+          $("#alert-message").append("Chosen Model: " + response.model);
+          $("#alert-message").append("Test Score: " + response.test_score);
         });
 
       } 
-      else if (response == 3) { 
+      else if (response.prediction  == 3) { 
         // alert("You have will most likely be able to get well at home!" ) 
         $(document).ready(function(){
           $("#alert-message").html("");
           $("#alert-message").append("You have will most likely be able to get well at home!");
+          $("#alert-message").append("Chosen Model: " + response.model);
+          $("#alert-message").append("Test Score: " + response.test_score);
         });
 
       } 

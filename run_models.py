@@ -27,21 +27,21 @@ def model1(selFeatures):
     return prediction1 
 
 # Model 2: Deep Learning
-def model2(selFeatures):
+# def model2(selFeatures):
  
-    Feature_list=[int(i) for i in selFeatures]
+#     Feature_list=[int(i) for i in selFeatures]
 
-    test=np.array(Feature_list, dtype=np.int32).reshape(1,-1)
+#     test=np.array(Feature_list, dtype=np.int32).reshape(1,-1)
 
-    # Load the models
-    # model2 = keras.models.load_model("static/model/best_dl.h5") 
-    model1 = joblib.load("static/model/best_clf.sav") 
+#     # Load the models
+#     # model2 = keras.models.load_model("static/model/best_dl.h5") 
+#     model1 = joblib.load("static/model/best_clf.sav") 
         
-    prediction1 = model1.predict(test)    
-    # prediction2 = model2.predict_classes(test)
-    print(prediction1)
+#     prediction1 = model1.predict(test)    
+#     # prediction2 = model2.predict_classes(test)
+#     print(prediction1)
 
-    return prediction1
+#     return prediction1
 
 # Model 3: Random Forest
 def model3(selFeatures):
