@@ -21,9 +21,11 @@ var listModel = [];
 var listGender = [];
 var listAge = [];
 
-listModel = ['Classification','Deep Learning','Random Forest','K-Nearest Neighbor']
+// listModel = ['Classification','Deep Learning','Random Forest','K-Nearest Neighbor']
+listModel = ['Decision Tree','Random Forest','K-Nearest Neighbor']
+
 listGender = ['Male','Female']
-listAge = ['< 39 years old','40 - 49 years old','50 - 59 years old','60 - 69 years old','70 - 79 years old','> 80 years old']
+listAge = ['<= 39 years old','40 - 49 years old','50 - 59 years old','60 - 69 years old','70 - 79 years old','=> 80 years old']
 
 console.log(listModel);
 console.log(listGender);
@@ -102,20 +104,20 @@ function preArray() {
     console.log("Throat Ache: ", inputThroatAche);
     console.log("Soreness: ",inputSoreness);
 
-    if (inputModel=='Classification') {chosenModel='model1';}
-      else if (inputModel=='Deep Learning') {chosenModel='model2'}
+    if (inputModel=='Decision Tree') {chosenModel='model1';}
+      // else if (inputModel=='Deep Learning') {chosenModel='model2'}
       else if (inputModel=='Random Forest') {chosenModel='model3'}
       else {chosenModel='model4'};
 
     if (inputGender=='Male') {s1="1"} else {s1 = "0";};
     if (inputGender=='Female') {s2="1"} else {s2 = "0";};
 
-    if (inputAge=='< 39 years old') {s3="1"} else {s3 = "0";};
+    if (inputAge=='<= 39 years old') {s3="1"} else {s3 = "0";};
     if (inputAge=='40 - 49 years old') {s4="1"} else {s4 = "0";};
     if (inputAge=='50 - 59 years old') {s5="1"} else {s5 = "0";};
     if (inputAge=='60 - 69 years old') {s6="1"} else {s6 = "0";};
     if (inputAge=='70 - 79 years old') {s7="1"} else {s7 = "0";};
-    if (inputAge=='> 80 years old') {s8="1"} else {s8 = "0";};
+    if (inputAge=='=> 80 years old') {s8="1"} else {s8 = "0";};
 
     if (inputPrecondition==0) {s9 = "1";} else {s9 = "0";};
     if (inputFromHotspot==0) {s10 = "1";} else {s10 = "0";};
@@ -148,6 +150,14 @@ loadDropDowns("#selectModel",listModel);
 loadDropDowns("#selectGender",listGender);
 loadDropDowns("#selectAge",listAge);
 
+//This is to show the alert box
+// function newAlert() {
+//   // document.getElementById('alert').style.display = 'table';
+//   $("#alert").css("display","table")
+//   console.log('something is working!');
+//   }
+
+
 // WE HAVE TO THINK ABOUT THIS ONE.... On Submit the page should be redirected to an endpoint from FLASK
 get_submit.on("click", function() {
   
@@ -163,23 +173,156 @@ get_submit.on("click", function() {
     console.log(modelString)
     
     url = "/api/v1.0/"+chosenModel+"/"+modelString
+    url_model =  "/api/v1.0/bar_model/"+modelString
 
     console.log(url)
+    console.log(url_model)
+
+    get_model_data(url_model)
 
     d3.json(url).then(function(response) {
       
       console.log(response)
 
-      // $('#message').dialog()
-
       if (response == 1) {
-        alert("Based on statistics, things aren't looking so well. Please see a doctor as soon as possible!" );
-      } else if (response == 2) {
-        alert("Your situation is severe, you will most likely have to go to the hospital!")
-      } else if (response == 3) { 
-        alert("You have will most likely be able to get well at home!" ) 
-      } else {alert ("Something went wrong, please try again")}
+        // alert("Based on statistics, things aren't looking so well. Please see a doctor as soon as possible!" );
+        $(document).ready(function(){
+          $("#alert-message").html("");
+          $("#alert-message").append("Based on statistics, things aren't looking so well. Please see a doctor as soon as possible!");
+        });
+      } 
+      else if (response == 2) {
+        // alert("Your situation is severe, you will most likely have to go to the hospital!")
+        $(document).ready(function(){
+          $("#alert-message").html("");
+          $("#alert-message").append("Your situation is severe, you will most likely have to go to the hospital!");
+        });
+
+      } 
+      else if (response == 3) { 
+        // alert("You have will most likely be able to get well at home!" ) 
+        $(document).ready(function(){
+          $("#alert-message").html("");
+          $("#alert-message").append("You have will most likely be able to get well at home!");
+        });
+
+      } 
+      else {
+        // alert ("Something went wrong, please try again")
+        $(document).ready(function(){
+          $("#alert-message").html("");
+          $("#alert-message").append("Something went wrong, please try again");
+        });
+
+      }
 
       
       })
   });
+
+//opens the alert box
+  $(document).ready(function(){
+    $("#bar_model").html("");
+
+    $("#submitAll").click(function() {
+      $("#alert")
+      .css("display","table")
+      .animate({opacity : 1}, 250);
+    });
+    
+    $("#submitAll").click(function() {
+      $("#bar_model")
+      .css("height", "500px");
+    });
+  });
+
+//closes alert box
+  $(document).ready(function(){
+    $(".note-close").click(function() {
+      $("#alert")
+      .css("display","none");
+    });
+  });
+
+
+function get_model_data(url_model) {d3.json(url_model).then(function(response) {
+    console.log("in the model part")
+    console.log(url_model)
+    console.log(response);
+
+    chart_data = response
+
+    create_model_chart(chart_data)
+    // create_chart_countries(chart_data)
+})}
+  
+
+function create_model_chart(bar_data) {   
+
+  console.log(bar_data)
+  bar_model = []
+  bar_train_score = []
+  bar_test_score = []
+
+  for (var i in bar_data) {
+      bar_model.push(bar_data[i].model)
+      bar_train_score.push(bar_data[i].train_score)
+      bar_test_score.push(bar_data[i].test_score)
+  }
+
+  x_values = bar_model
+
+  y_trace1 = bar_train_score;
+  y_trace2 = bar_test_score;
+
+console.log(x_values)
+console.log(y_trace1)
+
+var trace1 = {
+  x: x_values,
+  y: y_trace1,
+  name: "Training Scores",
+  type: "bar",
+  marker: {
+      color: '#91dada'
+    }
+}
+var trace2 = {
+  x: x_values,
+  y: y_trace2,
+  name: "Testing Scores",
+  type: "bar",
+  marker: {
+      color: '#337d7d'
+    }
+}
+
+var barData = [trace1, trace2]
+
+var barLayout = {
+      // barmode:"stack", 
+      title: { text: "Scoring models for " + d3.select("#selectGender").property("value") + " and " + d3.select("#selectAge").property("value") ,
+              font: {
+                  family: 'Oswald',
+                  size: 24
+                  }
+              },
+      legend: {
+          orientation: 'h',
+          x: 0.25, 
+          y: -0.15
+              },
+      // paper_bgcolor: "#0e173d",
+              font: {
+                  family: 'Oswald',
+                  size: 16
+                  },
+      yaxis: {fixedrange: true},
+      xaxis: {fixedrange: true}
+      
+
+  };
+
+  Plotly.newPlot("bar_model", barData, barLayout);
+  console.log("Plot done")
+}

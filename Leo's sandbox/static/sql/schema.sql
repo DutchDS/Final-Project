@@ -64,7 +64,7 @@ DROP VIEW IF EXISTS covid_by_county_v CASCADE;
 DROP VIEW IF EXISTS covid_by_state_v CASCADE;
 DROP VIEW IF EXISTS covid_by_country_v CASCADE;
 
-DROP TABLE IF EXISTS CASCADE;
+DROP TABLE IF EXISTS covid_data_states CASCADE;
 
 CREATE TABLE covid_data_states
 (
@@ -519,3 +519,20 @@ select date,s.state_name,pos_inc as new_cases,hospital_inc as new_hospitalizatio
     on c.state = s.state 
     order by c.state, date
 );
+
+-- Don't rerun this part unles you are rebuilding this table with the collect_performance_per_model.ipynb
+-- DROP TABLE IF EXISTS model_eval;
+
+-- CREATE TABLE model_eval
+-- (	
+-- 	id serial,
+--     gender text COLLATE pg_catalog."default",
+--     age text COLLATE pg_catalog."default",
+--     model text COLLATE pg_catalog."default",
+--     features double precision,
+--     train_score double precision,
+--     test_score double precision,
+-- 	CONSTRAINT "pk_model_eval" PRIMARY KEY (
+-- 	"id"
+--  )  
+-- );
