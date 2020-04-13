@@ -190,8 +190,8 @@ get_submit.on("click", function() {
         $(document).ready(function(){
           $("#alert-message").html("");
           $("#alert-message").append("Based on statistics, things aren't looking so well. Please see a doctor as soon as possible!");
-          $("#alert-message").append("Chosen Model: " + response.model);
-          $("#alert-message").append("Test Score: " + response.test_score);
+          $("#alert-message").append("<br>" + "Chosen Model: " + response.model) ;
+          $("#alert-message").append("<br>" + "Test Score: " + response.test_score);
         });
       } 
       else if (response.prediction  == 2) {
@@ -199,8 +199,8 @@ get_submit.on("click", function() {
         $(document).ready(function(){
           $("#alert-message").html("");
           $("#alert-message").append("Your situation is severe, you will most likely have to go to the hospital!");
-          $("#alert-message").append("Chosen Model: " + response.model);
-          $("#alert-message").append("Test Score: " + response.test_score);
+          $("#alert-message").append("<br>" + "Chosen Model: " + response.model );
+          $("#alert-message").append("<br>" + "Test Score: " + response.test_score);
         });
 
       } 
@@ -209,8 +209,8 @@ get_submit.on("click", function() {
         $(document).ready(function(){
           $("#alert-message").html("");
           $("#alert-message").append("You have will most likely be able to get well at home!");
-          $("#alert-message").append("Chosen Model: " + response.model);
-          $("#alert-message").append("Test Score: " + response.test_score);
+          $("#alert-message").append("<br>" + "Chosen Model: " + response.model);
+          $("#alert-message").append("<br>" + "Test Score: " + response.test_score);
         });
 
       } 

@@ -49,6 +49,11 @@ def viz():
   
     return render_template("Covid_Viz.html")
 
+@app.route("/forecast")
+def forecast(): 
+  
+    return render_template("Covid_Forecast.html")
+
 @app.route("/charts")
 def charts(): 
   
@@ -100,7 +105,7 @@ def model(model, selFeatures):
     print(result_long)
     x = (str(result[0]))
     print(x)
-    return result_long
+    return jsonify(result_long)
 
 
 @app.route("/api/v1.0/bar_states")
