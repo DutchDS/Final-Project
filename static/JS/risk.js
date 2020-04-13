@@ -183,8 +183,7 @@ get_submit.on("click", function() {
 
     d3.json(url).then(function(response) {
       
-      console.log(response)
-
+      console.log(response.prediction);
       if (response.prediction == 1) {
         // alert("Based on statistics, things aren't looking so well. Please see a doctor as soon as possible!" );
         $(document).ready(function(){
@@ -218,7 +217,9 @@ get_submit.on("click", function() {
         // alert ("Something went wrong, please try again")
         $(document).ready(function(){
           $("#alert-message").html("");
-          $("#alert-message").append("Something went wrong, please try again");
+          $("#alert-message").append("Something went wrong, please try again!");
+          $("#alert-message").append("<br>" + "Chosen Model: Error");
+          $("#alert-message").append("<br>" + "Test Score: Error");
         });
 
       }
