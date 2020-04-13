@@ -49,6 +49,11 @@ def viz():
   
     return render_template("Covid_Viz.html")
 
+@app.route("/forecast")
+def forecast(): 
+  
+    return render_template("Covid_Forecast.html")
+
 @app.route("/charts")
 def charts(): 
   
