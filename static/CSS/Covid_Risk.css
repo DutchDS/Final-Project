@@ -248,7 +248,7 @@ body {
   font-size: 25px;
   z-index: 3;
   text-align: center;
-  transform: translateY(-55%);
+  transform: translateY(5%);
 }
 
 #bar_model {
